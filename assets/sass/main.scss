@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+@import "reset";
+@import "variables";
+@import "home";
+@import "listings";
+@import "item";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-image: linear-gradient(135deg, rgba(43,31,155,.3) 1%,rgba(116,17,255,.3) 100%), url("/img/losangeles.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 20px;
+  color: white;
+
+  .fa {
+    font-size: 1rem;
+    padding: 0 5px;
+  }
+
+  .left-menu {
+    display: flex;
+    align-items: center;
+
+    a.logo {
+      color: white;
+      text-decoration: none;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-right: 20px;
+    }
+
+    .city {
+      min-width: 200px;
+      position: relative;
+      font-size: 1rem;
+      font-weight: 300;
+      cursor: pointer;
+
+      .fa {
+        transform: rotate(0deg);
+        transition: all 0.2s ease-in-out;
+
+        &.active {
+          transform: rotate(180deg);
+        }
+      }
+
+      .dropdown {
+        position: absolute;
+        background: transparent;
+        top: 0;
+        width: 100%;
+        padding: 3px 0;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.2s ease-in-out;
+
+        &.active {
+          visibility: visible;
+          top: 20px;
+          opacity: 1;
+        }
+
+        ul {
+          li {
+            padding: 3px 0;
+
+            &:hover {
+              color: red;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .right-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .user-img {}
+
+    .user-dropdown {
+      cursor: pointer;
+      padding: 0 15px;
+    }
+
+    .post-btn {
+      color: white;
+      background: $royal;
+      padding: 15px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}

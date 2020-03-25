@@ -1,0 +1,105 @@
+.home {
+  h1 {
+    color: white;
+    font-size: 3rem;
+    font-weight: 500;
+    text-align: center;
+    padding: 70px 0;
+  }
+
+  .categories {
+    background: rgba(0,0,0,.6);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+    padding: 20px;
+    margin-bottom: 70px;
+
+    .category {
+      a.title {
+        font-size: 1rem;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 0.6rem;
+
+        &:hover {
+          color: $royal;
+        }
+      }
+
+      .link-section {
+        display: flex;
+        flex-direction: column;
+
+        a {
+          text-decoration: none;
+          color: white;
+          font-size: 0.9rem;
+          font-weight: 300;
+          cursor: pointer;
+          padding: 3px 0;
+
+          &:hover {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+
+  .trending {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+
+    .search {
+      width: 70%;
+      margin: 0 auto;
+      font-size: 1.5rem;
+      border-radius: 5px;
+      border: 1px solid black;
+      outline: none;
+      padding: 10px;
+      margin-bottom: 30px;
+
+      &::placeholder {
+        font-style: italic;
+        font-size: 1.2rem;
+        font-weight: 100;
+        color: grey;
+      }
+    }
+
+    .title {
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .trending-tags {
+      width: 70%;
+      margin: 0 auto;
+
+      .tag {
+        color: white;
+        padding: 10px 20px;
+        border: 1px solid white;
+        border-radius: 30px;
+        display: inline-block;
+        font-size: 0.8rem;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        cursor: pointer;
+
+        &:hover {
+          background: white;
+          color: black;
+        }
+      }
+    }
+  }
+}

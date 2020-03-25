@@ -1,0 +1,149 @@
+.listings {
+  background: white;
+
+  #filter {
+    display: flex;
+    padding: 10px 0 20px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      padding: 5px;
+
+      label {
+        font-size: 1rem;
+        padding: 5px 10px;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: $darkslate;
+      }
+
+      select {
+        min-width: 100px;
+        background: white;
+        border: 2px solid $darkslate;
+        padding: 3px 10px;
+        font-size: 1.2rem;
+        color: $darkslate;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+
+      &.button {
+        flex-direction: row;
+        align-items: flex-end;
+
+        .clear-btn,
+        .primary-btn {
+          padding: 6px 20px;
+          border: 2px solid $darkslate;
+          font-size: 1.2rem;
+          cursor: pointer;
+        }
+
+        .primary-btn {
+          background: $royal;
+          color: white;
+          margin-right: 5px;
+        }
+
+        .clear-btn {
+          background: white;
+          color: $darkslate;
+        }
+      }
+    }
+  }
+
+  #content {
+    background: $offwhite;
+    padding: 20px 0;
+
+    .whitebox {
+      background: white;
+      padding: 20px;
+    }
+
+    #options {
+      display: flex;
+      margin-bottom: 20px;
+
+      .form-group {
+        display: flex;
+
+        select {
+          min-width: 50px;
+          background: white;
+          border: 2px solid $darkslate;
+          // border-radius: 3px;
+          padding: 3px 10px;
+          font-size: 1rem;
+          color: $slate;
+          margin-right: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    #results {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 20px;
+
+      .item {
+        box-shadow: 0 5px 10px 0 rgba(135,131,135,1);
+        border-radius: 3px;
+        overflow: hidden;
+        cursor: pointer;
+
+        .image {
+          height: 250px;
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat;
+          position: relative;
+
+          .price {
+            background: white;
+            color: green;
+            padding: 5px;
+            border-radius: 3px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+          }
+        }
+
+        .details {
+          padding: 10px;
+          position: relative;
+
+          h5 {
+            font-size: 0.9rem;
+            color: $darkslate;
+            margin-bottom: 5px;
+          }
+
+          .fa {
+            font-size: 1.2rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            color: $slate;
+            cursor: pointer;
+
+            &:hover {
+              color: $royal;
+            }
+          }
+
+          h6 {
+            font-size: 0.7rem;
+            color: $slate;
+          }
+        }
+      }
+    }
+  }
+}
