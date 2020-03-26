@@ -466,6 +466,8 @@ var _reactRouterDom = __webpack_require__(107);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -576,19 +578,10 @@ var Category = function (_Component) {
               },
               _react2.default.createElement(
                 "option",
-                { value: "Audi" },
-                "Audi"
+                { value: "all" },
+                "All"
               ),
-              _react2.default.createElement(
-                "option",
-                { value: "BMW" },
-                "BMW"
-              ),
-              _react2.default.createElement(
-                "option",
-                { value: "Porsche" },
-                "Porsche"
-              )
+              _this.displayMakeOptions()
             )
           ),
           _react2.default.createElement(
@@ -608,24 +601,10 @@ var Category = function (_Component) {
               },
               _react2.default.createElement(
                 "option",
-                { value: "325i" },
-                "325i"
+                { value: "all" },
+                "All"
               ),
-              _react2.default.createElement(
-                "option",
-                { value: "A3" },
-                "A3"
-              ),
-              _react2.default.createElement(
-                "option",
-                { value: "A8" },
-                "A8"
-              ),
-              _react2.default.createElement(
-                "option",
-                { value: "Taycan" },
-                "Taycan"
-              )
+              _this.displayModelOptions()
             )
           )
         );
@@ -637,6 +616,9 @@ var Category = function (_Component) {
       var value = event.target.type == "checkbox" ? event.target.checked : event.target.value;
       _this.setState(_defineProperty({}, name, value), function () {
         console.log(_this.state);
+        if (name == 'make') {
+          _this.getModelOptions();
+        }
       });
     };
 
@@ -650,7 +632,9 @@ var Category = function (_Component) {
           min_price = _this$state.min_price,
           max_price = _this$state.max_price,
           select_view = _this$state.select_view,
-          sort_by = _this$state.sort_by;
+          sort_by = _this$state.sort_by,
+          make = _this$state.make,
+          model = _this$state.model;
 
       // check if :listing is set, and use it if it is
 
@@ -662,9 +646,9 @@ var Category = function (_Component) {
       // this is the old way that refreshes the page
       // document.location.href = `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
 
-      var newSearch = "min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by;
+      var newSearch = "min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by + "&make=" + make + "&model=" + model;
 
-      history.push("/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by);
+      history.push("/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by + "&make=" + make + "&model=" + model);
 
       location = _this.props.location;
       console.log(newSearch);
@@ -672,7 +656,7 @@ var Category = function (_Component) {
       var queryParams = _queryString2.default.parse(newSearch);
 
       if (queryParams.min_price != undefined) {
-        _axios2.default.get("/api/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + queryParams.min_price + "&max_price=" + queryParams.max_price + "&select_view=" + queryParams.select_view + "&sort_by=" + queryParams.sort_by).then(function (response) {
+        _axios2.default.get("/api/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + queryParams.min_price + "&max_price=" + queryParams.max_price + "&select_view=" + queryParams.select_view + "&sort_by=" + queryParams.sort_by + "&make=" + queryParams.make + "&model=" + queryParams.model).then(function (response) {
           self.setState({
             itemsData: response.data
           }, function () {
@@ -684,12 +668,58 @@ var Category = function (_Component) {
       }
     };
 
+    _this.displayMakeOptions = function () {
+      var makes = _this.state.itemsData.map(function (item) {
+        return item.make;
+      });
+      makes = [].concat(_toConsumableArray(new Set(makes)));
+      makes.sort();
+
+      return makes.map(function (item, i) {
+        return _react2.default.createElement(
+          "option",
+          { value: item, key: i },
+          item
+        );
+      });
+    };
+
+    _this.getModelOptions = function () {
+      var newmodels = _this.state.itemsData;
+
+      console.log(_this.state.make);
+      if (_this.state.make != 'all') {
+        newmodels = newmodels.filter(function (item) {
+          return item.make == _this.state.make;
+        });
+      }
+      newmodels = newmodels.map(function (item) {
+        return item.model;
+      });
+      newmodels = [].concat(_toConsumableArray(new Set(newmodels)));
+      newmodels = newmodels.sort();
+      return newmodels;
+    };
+
+    _this.displayModelOptions = function () {
+      var models = _this.getModelOptions();
+      return models.map(function (item, i) {
+        return _react2.default.createElement(
+          "option",
+          { value: item, key: i },
+          item
+        );
+      });
+    };
+
     _this.state = {
       min_price: 0,
       max_price: 10000000,
       select_view: "gallery",
       sort_by: "price-desc",
-      itemsData: []
+      itemsData: [],
+      make: 'all',
+      model: 'all'
     };
     return _this;
   }
@@ -700,6 +730,7 @@ var Category = function (_Component) {
   _createClass(Category, [{
     key: "componentWillMount",
     value: function componentWillMount() {
+
       // http request spoof
       var _props = this.props,
           match = _props.match,
@@ -758,14 +789,17 @@ var Category = function (_Component) {
 
     // handle update button click
 
+
+    // get the car make options from data
+
+
+    // get the car model options from data and filter by make if set
+
+
+    // display the model selector options
+
   }, {
     key: "render",
-
-
-    // getMakeModelOptions = () => {
-    //       // TODO
-    // }
-
     value: function render() {
 
       // no results

@@ -14,12 +14,15 @@ export default class Category extends Component {
       max_price: 10000000,
       select_view: "gallery",
       sort_by: "price-desc",
-      itemsData: []
+      itemsData: [],
+      make: 'all',
+      model: 'all',
     };
   }
 
   // figure out what listings we should be displaying client-side
   componentWillMount() {
+
     // http request spoof
     const { match, location, history } = this.props;
     const self = this;
@@ -119,6 +122,7 @@ export default class Category extends Component {
 
   // only show make and model selectors if we are in /cars-and-trucks/
   showMakeModel = () => {
+
     const { match, location, history } = this.props;
 
     if (match.params.listings == "cars-and-trucks") {
@@ -135,9 +139,8 @@ export default class Category extends Component {
               className="make-select"
               onChange={this.handleChange}
             >
-              <option value="Audi">Audi</option>
-              <option value="BMW">BMW</option>
-              <option value="Porsche">Porsche</option>
+              <option value="all">All</option>
+              {this.displayMakeOptions()}
             </select>
           </div>
           <div className="form-group model">
@@ -147,10 +150,8 @@ export default class Category extends Component {
               className="model-select"
               onChange={this.handleChange}
             >
-              <option value="325i">325i</option>
-              <option value="A3">A3</option>
-              <option value="A8">A8</option>
-              <option value="Taycan">Taycan</option>
+              <option value="all">All</option>
+              {this.displayModelOptions()}
             </select>
           </div>
         </div>
@@ -171,6 +172,9 @@ export default class Category extends Component {
       },
       () => {
         console.log(this.state);
+        if (name == 'make') {
+          this.getModelOptions()
+        }
       }
     );
   };
@@ -179,7 +183,7 @@ export default class Category extends Component {
   submitFilters = () => {
     const self = this;
     let { match, location, history } = this.props;
-    const { min_price, max_price, select_view, sort_by } = this.state;
+    const { min_price, max_price, select_view, sort_by, make, model } = this.state;
 
     // check if :listing is set, and use it if it is
     let listing = "";
@@ -190,10 +194,10 @@ export default class Category extends Component {
     // this is the old way that refreshes the page
     // document.location.href = `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
 
-    let newSearch = `min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
+    let newSearch = `min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}&make=${make}&model=${model}`;
 
     history.push(
-      `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`
+      `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}&make=${make}&model=${model}`
     );
 
     location = this.props.location;
@@ -204,7 +208,7 @@ export default class Category extends Component {
     if (queryParams.min_price != undefined) {
       axios
         .get(
-          `/api/${match.params.city}/${match.params.category}${listing}?min_price=${queryParams.min_price}&max_price=${queryParams.max_price}&select_view=${queryParams.select_view}&sort_by=${queryParams.sort_by}`
+          `/api/${match.params.city}/${match.params.category}${listing}?min_price=${queryParams.min_price}&max_price=${queryParams.max_price}&select_view=${queryParams.select_view}&sort_by=${queryParams.sort_by}&make=${queryParams.make}&model=${queryParams.model}`
         )
         .then(function(response) {
           self.setState(
@@ -222,9 +226,46 @@ export default class Category extends Component {
     }
   };
 
-  // getMakeModelOptions = () => {
-  //       // TODO
-  // }
+  // get the car make options from data
+  displayMakeOptions = () => {
+    let makes = this.state.itemsData.map((item) => item.make)
+    makes = [...new Set(makes)]
+    makes.sort()
+
+    return makes.map((item, i) => {
+      return (
+        <option value={item} key={i}>{item}</option>
+      )
+    })
+  }
+
+  // get the car model options from data and filter by make if set
+  getModelOptions = () => {
+    let newmodels = this.state.itemsData
+
+    console.log(this.state.make)
+    if (this.state.make != 'all') {
+      newmodels = newmodels.filter((item) => {
+        return (
+          item.make == this.state.make
+        )
+      })
+    }
+    newmodels = newmodels.map((item) => item.model)
+    newmodels = [...new Set(newmodels)]
+    newmodels = newmodels.sort()
+    return newmodels
+  }
+
+  // display the model selector options
+  displayModelOptions = () => {
+    let models = this.getModelOptions()
+    return models.map((item, i) => {
+      return (
+        <option value={item} key={i}>{item}</option>
+      )
+    })
+  }
 
   render() {
 
