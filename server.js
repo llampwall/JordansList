@@ -38,6 +38,22 @@ app.get("/api/:city/:category", function(req, res) {
       );
     });
 
+    // further filtering for make and model
+    if (req.query.make != 'all') {
+      newData = itemsData.filter(item => {
+        return (
+          item.make == req.query.make
+        );
+      });
+    }
+    if (req.query.model != 'all') {
+      newData = itemsData.filter(item => {
+        return (
+          item.model == req.query.model
+        );
+      });
+    }
+
     // sorting
     if (req.query.sort_by == 'price-dsc') {
       newData.sort((a,b) => {
@@ -83,6 +99,22 @@ app.get("/api/:city/:category/:listings", function(req, res) {
         item.price <= req.query.max_price
       );
     });
+
+    // further filtering for make and model
+    if (req.query.make != 'all') {
+      newData = itemsData.filter(item => {
+        return (
+          item.make == req.query.make
+        );
+      });
+    }
+    if (req.query.model != 'all') {
+      newData = itemsData.filter(item => {
+        return (
+          item.model == req.query.model
+        );
+      });
+    }
 
     // sorting
     if (req.query.sort_by == 'price-dsc') {

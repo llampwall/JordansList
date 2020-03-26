@@ -227,6 +227,8 @@ export default class Category extends Component {
   };
 
   // get the car make options from data
+  // works, but it's options are restricted to the results given the first time,
+  // so you have to click back to All after to switch makes
   displayMakeOptions = () => {
     let makes = this.state.itemsData.map((item) => item.make)
     makes = [...new Set(makes)]

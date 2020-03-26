@@ -791,6 +791,8 @@ var Category = function (_Component) {
 
 
     // get the car make options from data
+    // works, but it's options are restricted to the results given the first time,
+    // so you have to click back to All after to switch makes
 
 
     // get the car model options from data and filter by make if set
