@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+// custom modular gallery component
+
 export default class Gallery extends Component {
   constructor () {
     super()

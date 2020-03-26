@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 245:
+/***/ 246:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20,21 +20,21 @@ var _reactDom = __webpack_require__(83);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(584);
+var _reactRouterDom = __webpack_require__(154);
 
-var _Header = __webpack_require__(267);
+var _Header = __webpack_require__(268);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _Home = __webpack_require__(270);
+var _Home = __webpack_require__(271);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _Category = __webpack_require__(269);
+var _Category = __webpack_require__(270);
 
 var _Category2 = _interopRequireDefault(_Category);
 
-var _Item = __webpack_require__(271);
+var _Item = __webpack_require__(272);
 
 var _Item2 = _interopRequireDefault(_Item);
 
@@ -72,9 +72,9 @@ var App = function (_Component) {
           _react2.default.createElement(_reactRouterDom.Route, { path: '/:city', component: _Header2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:city', component: _Home2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:city/:cat', component: _Category2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:city/:cat/:listings', component: _Category2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:city/:cat/:listings/:item', component: _Item2.default })
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:city/:category', component: _Category2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:city/:category/:listings', component: _Category2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:city/:category/:listings/:item', component: _Item2.default })
         )
       );
     }
@@ -87,7 +87,7 @@ exports.default = App;
 
 /***/ }),
 
-/***/ 266:
+/***/ 267:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110,6 +110,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// custom modular gallery component
 
 var Gallery = function (_Component) {
   _inherits(Gallery, _Component);
@@ -212,7 +214,7 @@ exports.default = Gallery;
 
 /***/ }),
 
-/***/ 267:
+/***/ 268:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -227,6 +229,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(23);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(154);
 
 var _axios = __webpack_require__(108);
 
@@ -253,7 +257,7 @@ var Header = function (_Component) {
       return _this.state.cities.map(function (city, i) {
         if (city.title != _this.state.selectedCity) {
           return _react2.default.createElement(
-            'li',
+            "li",
             { key: i, onClick: _this.selectCity.bind(null, city) },
             city.title
           );
@@ -275,14 +279,14 @@ var Header = function (_Component) {
             match = _this$props.match,
             history = _this$props.history;
 
-        history.push('/' + city.slug);
+        history.push("/" + city.slug);
       });
     };
 
     _this.state = {
       cityDropDown: false,
       cities: [],
-      selectedCity: 'Los Angeles'
+      selectedCity: "Los Angeles"
     };
     return _this;
   }
@@ -291,10 +295,10 @@ var Header = function (_Component) {
 
 
   _createClass(Header, [{
-    key: 'componentWillMount',
+    key: "componentWillMount",
     value: function componentWillMount() {
       var self = this;
-      _axios2.default.get('/api/cities').then(function (response) {
+      _axios2.default.get("/api/cities").then(function (response) {
         var _self$props = self.props,
             match = _self$props.match,
             history = _self$props.history;
@@ -322,32 +326,40 @@ var Header = function (_Component) {
     // change the active city and refresh the page accordingly
 
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
+      var _props = this.props,
+          match = _props.match,
+          history = _props.history;
+
       return _react2.default.createElement(
-        'div',
-        { className: 'container' },
+        "div",
+        { className: "container" },
         _react2.default.createElement(
-          'header',
+          "header",
           null,
           _react2.default.createElement(
-            'div',
-            { className: 'left-menu' },
+            "div",
+            { className: "left-menu" },
             _react2.default.createElement(
-              'a',
-              { href: '/', className: 'logo' },
-              'Jordan\'sList'
+              _reactRouterDom.Link,
+              { to: "/" + match.params.city, className: "logo" },
+              "Jordan'sList"
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'city', onClick: this.clickedCityDropDown },
+              "div",
+              { className: "city", onClick: this.clickedCityDropDown },
               this.state.selectedCity,
-              _react2.default.createElement('i', { className: 'fa fa-chevron-down ' + (this.state.cityDropDown ? 'active' : '') }),
+              _react2.default.createElement("i", {
+                className: "fa fa-chevron-down " + (this.state.cityDropDown ? "active" : "")
+              }),
               _react2.default.createElement(
-                'div',
-                { className: 'dropdown ' + (this.state.cityDropDown ? 'active' : '') },
+                "div",
+                {
+                  className: "dropdown " + (this.state.cityDropDown ? "active" : "")
+                },
                 _react2.default.createElement(
-                  'ul',
+                  "ul",
                   null,
                   this.loopCities()
                 )
@@ -355,23 +367,23 @@ var Header = function (_Component) {
             )
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'right-menu' },
+            "div",
+            { className: "right-menu" },
             _react2.default.createElement(
-              'div',
-              { className: 'user-img' },
-              _react2.default.createElement('i', { className: 'fa fa-user' })
+              "div",
+              { className: "user-img" },
+              _react2.default.createElement("i", { className: "fa fa-user" })
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'user-dropdown' },
-              'My Account ',
-              _react2.default.createElement('i', { className: 'fa fa-chevron-down' })
+              "div",
+              { className: "user-dropdown" },
+              "My Account ",
+              _react2.default.createElement("i", { className: "fa fa-chevron-down" })
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'post-btn' },
-              'Post to Classifieds'
+              "div",
+              { className: "post-btn" },
+              "Post to Classifieds"
             )
           )
         )
@@ -386,7 +398,7 @@ exports.default = Header;
 
 /***/ }),
 
-/***/ 268:
+/***/ 269:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -400,7 +412,7 @@ var _reactDom = __webpack_require__(83);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(245);
+var _App = __webpack_require__(246);
 
 var _App2 = _interopRequireDefault(_App);
 
@@ -412,7 +424,7 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), ap
 
 /***/ }),
 
-/***/ 269:
+/***/ 270:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -432,7 +444,13 @@ var _axios = __webpack_require__(108);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _queryString = __webpack_require__(504);
+
+var _queryString2 = _interopRequireDefault(_queryString);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -452,42 +470,44 @@ var Category = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Category.__proto__ || Object.getPrototypeOf(Category)).call(this));
 
     _this.loopItems = function () {
-
       // for formatting currency without decimals
-      var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
+      var formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
         minimumFractionDigits: 0,
-        currency: 'USD'
+        currency: "USD"
       });
 
       return _this.state.itemsData.map(function (item, index) {
         return _react2.default.createElement(
-          'div',
-          { className: 'item', key: (item, index) },
+          "div",
+          { className: "item", key: (item, index) },
           _react2.default.createElement(
-            'div',
-            { className: 'image', style: {
-                "backgroundImage": 'url(\'' + item.images[0] + '\')'
-              } },
+            "div",
+            {
+              className: "image",
+              style: {
+                backgroundImage: "url('" + item.images[0] + "')"
+              }
+            },
             _react2.default.createElement(
-              'div',
-              { className: 'price' },
+              "div",
+              { className: "price" },
               formatter.format(item.price)
             )
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'details' },
+            "div",
+            { className: "details" },
             _react2.default.createElement(
-              'h5',
+              "h5",
               null,
-              item.year + ' ' + item.details.make + ' ' + item.details.model
+              item.year + " " + item.details.make + " " + item.details.model
             ),
-            _react2.default.createElement('i', { className: 'fa fa-star' }),
+            _react2.default.createElement("i", { className: "fa fa-star" }),
             _react2.default.createElement(
-              'h6',
+              "h6",
               null,
-              'Beverly Hills'
+              "Beverly Hills"
             )
           )
         );
@@ -500,67 +520,81 @@ var Category = function (_Component) {
           location = _this$props.location,
           history = _this$props.history;
 
-      console.log(match);
 
-      if (match.params.listings == 'cars-and-trucks') {
+      if (match.params.listings == "cars-and-trucks") {
         return _react2.default.createElement(
-          'div',
-          { style: {
-              "display": "flex"
-            } },
+          "div",
+          {
+            style: {
+              display: "flex"
+            }
+          },
           _react2.default.createElement(
-            'div',
-            { className: 'form-group make' },
+            "div",
+            { className: "form-group make" },
             _react2.default.createElement(
-              'label',
+              "label",
               null,
-              'Make'
+              "Make"
             ),
             _react2.default.createElement(
-              'select',
-              { name: 'make', className: 'make-select' },
+              "select",
+              {
+                name: "make",
+                className: "make-select",
+                onChange: _this.handleChange
+              },
               _react2.default.createElement(
-                'option',
-                { value: 'Audi' },
-                'Audi'
+                "option",
+                { value: "Audi" },
+                "Audi"
               ),
               _react2.default.createElement(
-                'option',
-                { value: 'BMW' },
-                'BMW'
+                "option",
+                { value: "BMW" },
+                "BMW"
               ),
               _react2.default.createElement(
-                'option',
-                { value: 'Porsche' },
-                'Porsche'
+                "option",
+                { value: "Porsche" },
+                "Porsche"
               )
             )
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'form-group model' },
+            "div",
+            { className: "form-group model" },
             _react2.default.createElement(
-              'label',
+              "label",
               null,
-              'Model'
+              "Model"
             ),
             _react2.default.createElement(
-              'select',
-              { name: 'model', className: 'model-select' },
+              "select",
+              {
+                name: "model",
+                className: "model-select",
+                onChange: _this.handleChange
+              },
               _react2.default.createElement(
-                'option',
-                { value: 'a3' },
-                'A3'
+                "option",
+                { value: "325i" },
+                "325i"
               ),
               _react2.default.createElement(
-                'option',
-                { value: 'a4' },
-                'A4'
+                "option",
+                { value: "A3" },
+                "A3"
               ),
               _react2.default.createElement(
-                'option',
-                { value: 'a8' },
-                'A8'
+                "option",
+                { value: "A8" },
+                "A8"
+              ),
+              _react2.default.createElement(
+                "option",
+                { value: "Taycan" },
+                "Taycan"
               )
             )
           )
@@ -568,16 +602,79 @@ var Category = function (_Component) {
       }
     };
 
+    _this.handleChange = function (event) {
+      var name = event.target.name;
+      var value = event.target.type == "checkbox" ? event.target.checked : event.target.value;
+      _this.setState(_defineProperty({}, name, value), function () {
+        console.log(_this.state);
+      });
+    };
+
+    _this.submitFilters = function () {
+      var self = _this;
+      var _this$props2 = _this.props,
+          match = _this$props2.match,
+          location = _this$props2.location,
+          history = _this$props2.history;
+      var _this$state = _this.state,
+          min_price = _this$state.min_price,
+          max_price = _this$state.max_price,
+          select_view = _this$state.select_view,
+          sort_by = _this$state.sort_by;
+
+      console.log(match);
+
+      var listing = "";
+      if (match.params.listings != undefined) {
+        listing = "/" + match.params.listings;
+      }
+
+      document.location.href = "/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by;
+
+      // history.push(
+      //   `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`
+      // );
+      //
+      // const queryParams = qs.parse(this.props.location.search);
+      // if (queryParams.min_price != undefined) {
+      //   console.log("update queryParams: ");
+      //   console.log(queryParams);
+      //   axios
+      //     .get(
+      //       `/api/${match.params.city}/${match.params.category}${listing}?min_price=${queryParams.min_price}&max_price=${queryParams.max_price}&select_view=${queryParams.select_view}&sort_by=${queryParams.sort_by}`
+      //     )
+      //     .then(function(response) {
+      //       self.setState(
+      //         {
+      //           itemsData: response.data
+      //         },
+      //         () => {
+      //           console.log(self.state);
+      //         }
+      //       );
+      //     })
+      //     .catch(function(error) {
+      //       console.log(error);
+      //     });
+      // }
+    };
+
     _this.state = {
+      min_price: 0,
+      max_price: 10000000,
+      select_view: "gallery",
+      sort_by: "price-desc",
       itemsData: []
     };
     return _this;
   }
 
-  _createClass(Category, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+  // figure out what listings we should be displaying client-side
 
+
+  _createClass(Category, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
       // http request spoof
       var _props = this.props,
           match = _props.match,
@@ -585,15 +682,43 @@ var Category = function (_Component) {
           history = _props.history;
 
       var self = this;
-      _axios2.default.get('/api/' + match.params.city + '/' + match.params.category).then(function (response) {
-        self.setState({
-          itemsData: response.data
-        }, function () {
-          console.log(self.state);
+
+      var listing = "";
+      if (match.params.listings != undefined) {
+        listing = "/" + match.params.listings;
+      }
+
+      // try to parse url query parameters
+      var queryParams = _queryString2.default.parse(this.props.location.search);
+      var min_price = queryParams.min_price,
+          max_price = queryParams.max_price,
+          select_view = queryParams.select_view,
+          sort_by = queryParams.sort_by;
+
+      if (min_price != undefined) {
+        console.log("willmount queryParams: ");
+        console.log(queryParams);
+        _axios2.default.get("/api/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by).then(function (response) {
+          self.setState({
+            itemsData: response.data
+          }, function () {
+            // console.log(self.state);
+          });
+        }).catch(function (error) {
+          console.log(error);
         });
-      }).catch(function (error) {
-        console.log(error);
-      }).then(function () {});
+      } else {
+        // otherwise do a regular request
+        _axios2.default.get("/api/" + match.params.city + "/" + match.params.category + listing).then(function (response) {
+          self.setState({
+            itemsData: response.data
+          }, function () {
+            // console.log(self.state);
+          });
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     }
 
     // get all the item data and loop through it to display
@@ -601,8 +726,14 @@ var Category = function (_Component) {
 
     // only show make and model selectors if we are in /cars-and-trucks/
 
+
+    // handler for filter changes
+
+
+    // handle update button click
+
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _props2 = this.props,
           match = _props2.match,
@@ -611,144 +742,174 @@ var Category = function (_Component) {
 
 
       return _react2.default.createElement(
-        'div',
-        { className: 'listings' },
+        "div",
+        { className: "listings" },
         _react2.default.createElement(
-          'div',
-          { className: 'container' },
+          "div",
+          { className: "container" },
           _react2.default.createElement(
-            'section',
-            { id: 'filter' },
+            "section",
+            { id: "filter" },
             _react2.default.createElement(
-              'div',
-              { className: 'form-group price' },
+              "div",
+              { className: "form-group price" },
               _react2.default.createElement(
-                'label',
+                "label",
                 null,
-                'Price'
+                "Price"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'minmax' },
+                "div",
+                { className: "minmax" },
                 _react2.default.createElement(
-                  'select',
-                  { name: 'min-price', className: 'min-price' },
+                  "select",
+                  {
+                    name: "min_price",
+                    className: "min-price",
+                    value: this.state.min_price,
+                    onChange: this.handleChange
+                  },
                   _react2.default.createElement(
-                    'option',
-                    { value: '1000' },
-                    '1000'
+                    "option",
+                    { value: "0" },
+                    "min"
                   ),
                   _react2.default.createElement(
-                    'option',
-                    { value: '2000' },
-                    '2000'
+                    "option",
+                    { value: "10000" },
+                    "10,000"
                   ),
                   _react2.default.createElement(
-                    'option',
-                    { value: '3000' },
-                    '3000'
+                    "option",
+                    { value: "50000" },
+                    "50,000"
+                  ),
+                  _react2.default.createElement(
+                    "option",
+                    { value: "100000" },
+                    "100,000"
                   )
                 ),
                 _react2.default.createElement(
-                  'select',
-                  { name: 'max-price', className: 'max-price' },
+                  "select",
+                  {
+                    name: "max_price",
+                    className: "max-price",
+                    value: this.state.max_price,
+                    onChange: this.handleChange
+                  },
                   _react2.default.createElement(
-                    'option',
-                    { value: '1000' },
-                    '1000'
+                    "option",
+                    { value: "10000" },
+                    "10,000"
                   ),
                   _react2.default.createElement(
-                    'option',
-                    { value: '2000' },
-                    '2000'
+                    "option",
+                    { value: "50000" },
+                    "50,000"
                   ),
                   _react2.default.createElement(
-                    'option',
-                    { value: '3000' },
-                    '3000'
+                    "option",
+                    { value: "100000" },
+                    "100,000"
+                  ),
+                  _react2.default.createElement(
+                    "option",
+                    { value: "10000000" },
+                    "max"
                   )
                 )
               )
             ),
             this.showMakeModel(),
             _react2.default.createElement(
-              'div',
-              { className: 'form-group button' },
+              "div",
+              { className: "form-group button" },
               _react2.default.createElement(
-                'div',
-                { className: 'primary-btn' },
-                'Update'
+                "div",
+                { className: "primary-btn", onClick: this.submitFilters },
+                "Update"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'clear-btn' },
-                'Clear'
+                "div",
+                { className: "clear-btn" },
+                "Clear"
               )
             )
           )
         ),
         _react2.default.createElement(
-          'section',
-          { id: 'content' },
+          "section",
+          { id: "content" },
           _react2.default.createElement(
-            'div',
-            { className: 'container' },
+            "div",
+            { className: "container" },
             _react2.default.createElement(
-              'div',
-              { className: 'whitebox' },
+              "div",
+              { className: "whitebox" },
               _react2.default.createElement(
-                'section',
-                { id: 'options' },
+                "section",
+                { id: "options" },
                 _react2.default.createElement(
-                  'div',
-                  { className: 'form-group view-dropdown' },
+                  "div",
+                  { className: "form-group view-dropdown" },
                   _react2.default.createElement(
-                    'select',
-                    { name: 'select-view', className: 'select-view' },
+                    "select",
+                    {
+                      name: "select_view",
+                      className: "select-view",
+                      value: this.state.select_view,
+                      onChange: this.handleChange
+                    },
                     _react2.default.createElement(
-                      'option',
-                      { value: 'list' },
-                      'List'
+                      "option",
+                      { value: "gallery" },
+                      "Gallery"
                     ),
                     _react2.default.createElement(
-                      'option',
-                      { value: 'gallery' },
-                      'Gallery'
+                      "option",
+                      { value: "list" },
+                      "List"
                     )
                   )
                 ),
                 _react2.default.createElement(
-                  'div',
-                  { className: 'form-group sort' },
+                  "div",
+                  { className: "form-group sort" },
                   _react2.default.createElement(
-                    'select',
-                    { name: 'sort-by', className: 'sort-by' },
+                    "select",
+                    {
+                      name: "sort_by",
+                      className: "sort-by",
+                      value: this.state.sort_by,
+                      onChange: this.handleChange
+                    },
                     _react2.default.createElement(
-                      'option',
-                      { value: 'price-desc' },
-                      'Price - Highest'
+                      "option",
+                      { value: "price-desc" },
+                      "Price - Highest"
                     ),
                     _react2.default.createElement(
-                      'option',
-                      { value: 'price-asc' },
-                      'Price - Lowest'
+                      "option",
+                      { value: "price-asc" },
+                      "Price - Lowest"
                     ),
                     _react2.default.createElement(
-                      'option',
-                      { value: 'date-desc' },
-                      'Newest'
+                      "option",
+                      { value: "date-desc" },
+                      "Newest"
                     ),
                     _react2.default.createElement(
-                      'option',
-                      { value: 'date-asc' },
-                      'Oldest'
+                      "option",
+                      { value: "date-asc" },
+                      "Oldest"
                     )
                   )
                 )
               ),
               _react2.default.createElement(
-                'section',
-                { id: 'results' },
+                "section",
+                { id: "results" },
                 this.loopItems()
               )
             )
@@ -765,7 +926,7 @@ exports.default = Category;
 
 /***/ }),
 
-/***/ 270:
+/***/ 271:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -780,6 +941,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(23);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(154);
 
 var _axios = __webpack_require__(108);
 
@@ -805,16 +968,16 @@ var Home = function (_Component) {
       var match = _this.props.match;
       return _this.state.categoriesData.map(function (item, i) {
         return _react2.default.createElement(
-          'div',
-          { className: 'category', key: i },
+          "div",
+          { className: "category", key: i },
           _react2.default.createElement(
-            'a',
-            { href: '/' + match.params.city + '/' + item.title, className: 'title' },
+            _reactRouterDom.Link,
+            { to: "/" + match.params.city + "/" + item.title, className: "title" },
             item.title
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'link-section' },
+            "div",
+            { className: "link-section" },
             _this.loopGroups(item)
           )
         );
@@ -825,8 +988,12 @@ var Home = function (_Component) {
       var match = _this.props.match;
       return category.listings.map(function (item, i) {
         return _react2.default.createElement(
-          'a',
-          { href: '/' + match.params.city + '/' + category.title + '/' + item.slug, key: i, className: 'link' },
+          _reactRouterDom.Link,
+          {
+            to: "/" + match.params.city + "/" + category.title + "/" + item.slug,
+            key: i,
+            className: "link"
+          },
           item.name
         );
       });
@@ -842,21 +1009,21 @@ var Home = function (_Component) {
 
 
   _createClass(Home, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
-
       // default to LA
       var _props = this.props,
           match = _props.match,
           history = _props.history;
 
       if (match.params.city == undefined) {
-        history.push('/la');
+        history.push("/la");
+        return;
       }
 
       // http request spoof
       var self = this;
-      _axios2.default.get('/api/' + match.params.city).then(function (response) {
+      _axios2.default.get("/api/" + match.params.city).then(function (response) {
         self.setState({
           categoriesData: response.data
         }, function () {
@@ -873,76 +1040,81 @@ var Home = function (_Component) {
     // loop through the groups within each category
 
   }, {
-    key: 'render',
+    key: "render",
 
 
     // render the main page
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'home' },
+        "div",
+        { className: "home" },
         _react2.default.createElement(
-          'div',
-          { className: 'container' },
+          "div",
+          { className: "container" },
           _react2.default.createElement(
-            'h1',
+            "h1",
             null,
-            'Connecting People',
-            _react2.default.createElement('br', null),
-            'Everywhere'
+            "Connecting People",
+            _react2.default.createElement("br", null),
+            "Everywhere"
           ),
           _react2.default.createElement(
-            'section',
-            { className: 'categories' },
+            "section",
+            { className: "categories" },
             this.loopCategories()
           ),
           _react2.default.createElement(
-            'section',
-            { className: 'trending' },
-            _react2.default.createElement('input', { type: 'text', name: 'search', className: 'search', placeholder: 'Search Classifieds, Jobs, Housing, Discussions, Personals...' }),
+            "section",
+            { className: "trending" },
+            _react2.default.createElement("input", {
+              type: "text",
+              name: "search",
+              className: "search",
+              placeholder: "Search Classifieds, Jobs, Housing, Discussions, Personals..."
+            }),
             _react2.default.createElement(
-              'div',
-              { className: 'title' },
-              _react2.default.createElement('i', { className: 'far fa-clock' }),
-              'Trending Now'
+              "div",
+              { className: "title" },
+              _react2.default.createElement("i", { className: "far fa-clock" }),
+              "Trending Now"
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'trending-tags' },
+              "div",
+              { className: "trending-tags" },
               _react2.default.createElement(
-                'div',
-                { className: 'tag' },
-                'Apple Macbook'
+                "div",
+                { className: "tag" },
+                "Apple Macbook"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'tag' },
-                'Sony XBR900'
+                "div",
+                { className: "tag" },
+                "Sony XBR900"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'tag' },
-                'Pioneer XDJ'
+                "div",
+                { className: "tag" },
+                "Pioneer XDJ"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'tag' },
-                'Sculpting Classes'
+                "div",
+                { className: "tag" },
+                "Sculpting Classes"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'tag' },
-                'Apartments'
+                "div",
+                { className: "tag" },
+                "Apartments"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'tag' },
-                'Home Repair'
+                "div",
+                { className: "tag" },
+                "Home Repair"
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'tag' },
-                'Masseuse'
+                "div",
+                { className: "tag" },
+                "Masseuse"
               )
             )
           )
@@ -958,7 +1130,7 @@ exports.default = Home;
 
 /***/ }),
 
-/***/ 271:
+/***/ 272:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -974,7 +1146,7 @@ var _react = __webpack_require__(23);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Gallery = __webpack_require__(266);
+var _Gallery = __webpack_require__(267);
 
 var _Gallery2 = _interopRequireDefault(_Gallery);
 
@@ -1201,4 +1373,4 @@ exports.default = Item;
 
 /***/ })
 
-},[268]);
+},[269]);
