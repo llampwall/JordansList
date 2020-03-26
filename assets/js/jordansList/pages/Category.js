@@ -187,6 +187,7 @@ export default class Category extends Component {
       listing = "/" + match.params.listings;
     }
 
+    // this is the old way that refreshes the page
     // document.location.href = `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
 
     let newSearch = `min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;

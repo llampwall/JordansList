@@ -234,12 +234,14 @@ if (this.state.itemsData.length == 0) {
 TODO:
 prev/next buttons on item page?
 fix hack for GET /la/for-sale/id case
-get other filters to work
+make / model selectors
+populate selectors with data
 list view
 page max and pagination
 
 populate with more data
 get a lot more images
+general styling
 
 search bar / trending now
 post item view

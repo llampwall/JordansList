@@ -12,7 +12,7 @@ export default class Gallery extends Component {
   }
 
   componentDidMount() {
-    const allImgs = [this.state.image,'/img/car2.jpg','/img/car3.gif','/img/car4.jpg','/img/car5.jpg','/img/car6.jpg'];
+    const allImgs = [this.state.image,'/img/car3.jpg','/img/car8.jpg','/img/car17.jpg','/img/car5.jpg','/img/car21.jpg'];
 
     this.setState({
       allImgs
@@ -24,7 +24,7 @@ export default class Gallery extends Component {
     if (nextProps.image !== this.props.image) {
       let img = nextProps.image
       this.setState({
-        allImgs: [img,'/img/car2.jpg','/img/car3.gif','/img/car4.jpg','/img/car5.jpg','/img/car6.jpg']
+        allImgs: [nextProps.image,'/img/car3.jpg','/img/car8.jpg','/img/car17.jpg','/img/car5.jpg','/img/car21.jpg']
       });
     }
 

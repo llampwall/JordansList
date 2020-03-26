@@ -156,7 +156,7 @@ var Gallery = function (_Component) {
   _createClass(Gallery, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var allImgs = [this.state.image, '/img/car2.jpg', '/img/car3.gif', '/img/car4.jpg', '/img/car5.jpg', '/img/car6.jpg'];
+      var allImgs = [this.state.image, '/img/car3.jpg', '/img/car8.jpg', '/img/car17.jpg', '/img/car5.jpg', '/img/car21.jpg'];
 
       this.setState({
         allImgs: allImgs
@@ -169,7 +169,7 @@ var Gallery = function (_Component) {
       if (nextProps.image !== this.props.image) {
         var img = nextProps.image;
         this.setState({
-          allImgs: [img, '/img/car2.jpg', '/img/car3.gif', '/img/car4.jpg', '/img/car5.jpg', '/img/car6.jpg']
+          allImgs: [nextProps.image, '/img/car3.jpg', '/img/car8.jpg', '/img/car17.jpg', '/img/car5.jpg', '/img/car21.jpg']
         });
       }
 
@@ -659,6 +659,7 @@ var Category = function (_Component) {
         listing = "/" + match.params.listings;
       }
 
+      // this is the old way that refreshes the page
       // document.location.href = `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
 
       var newSearch = "min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by;
@@ -1245,8 +1246,7 @@ var Item = function (_Component) {
     key: 'render',
     value: function render() {
       var item = this.state.itemData;
-
-      var image = item.images;
+      var image = item.images; // fix this later
 
       var formatter = new Intl.NumberFormat("en-US", {
         style: "currency",

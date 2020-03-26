@@ -48,9 +48,7 @@ export default class Item extends Component {
 
   render () {
     const item = this.state.itemData
-
-    const image = item.images
-
+    const image = item.images  // fix this later
 
     var formatter = new Intl.NumberFormat("en-US", {
       style: "currency",
