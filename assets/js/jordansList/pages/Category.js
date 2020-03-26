@@ -222,8 +222,13 @@ export default class Category extends Component {
     }
   };
 
+  // getMakeModelOptions = () => {
+  //       // TODO
+  // }
+
   render() {
 
+    // no results
     if (this.state.itemsData.length == 0) {
       return (
         <div className="oops">
@@ -233,6 +238,8 @@ export default class Category extends Component {
         </div>
       );
     }
+
+    let gallery = (this.state.select_view == "gallery")
 
     return (
       <div className="listings">
@@ -305,7 +312,7 @@ export default class Category extends Component {
                 </div>
               </section>
 
-              <section id="results">{this.loopItems()}</section>
+              <section id='results' className={`${gallery ? '' : 'listview'}`}>{this.loopItems()}</section>
             </div>
           </div>
         </section>

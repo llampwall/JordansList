@@ -27,6 +27,8 @@ app.get("/api/:city/:category", function(req, res) {
 
   if (req.query.min_price != undefined) {
     console.log(req.query);
+
+    // filtering
     newData = itemsData.filter(item => {
       return (
         item.city == req.params.city &&
@@ -35,6 +37,8 @@ app.get("/api/:city/:category", function(req, res) {
         item.price <= req.query.max_price
       );
     });
+
+    // sorting
     if (req.query.sort_by == 'price-dsc') {
       newData.sort((a,b) => {
         return b.price - a.price
@@ -42,6 +46,14 @@ app.get("/api/:city/:category", function(req, res) {
     } else if (req.query.sort_by == 'price-asc') {
       newData.sort((a,b) => {
         return a.price - b.price
+      })
+    } else if (req.query.sort_by == 'date-dsc') {
+      newData.sort((a,b) => {
+        return b.year - a.year
+      })
+    } else if (req.query.sort_by == 'date-asc') {
+      newData.sort((a,b) => {
+        return a.year - b.year
       })
     }
   } else {
@@ -61,6 +73,8 @@ app.get("/api/:city/:category/:listings", function(req, res) {
 
   if (req.query.min_price != undefined) {
     console.log(req.query);
+
+    // filtering
     newData = itemsData.filter(item => {
       return (
         item.city == req.params.city &&
@@ -69,6 +83,8 @@ app.get("/api/:city/:category/:listings", function(req, res) {
         item.price <= req.query.max_price
       );
     });
+
+    // sorting
     if (req.query.sort_by == 'price-dsc') {
       newData.sort((a,b) => {
         return b.price - a.price
@@ -76,6 +92,14 @@ app.get("/api/:city/:category/:listings", function(req, res) {
     } else if (req.query.sort_by == 'price-asc') {
       newData.sort((a,b) => {
         return a.price - b.price
+      })
+    } else if (req.query.sort_by == 'date-dsc') {
+      newData.sort((a,b) => {
+        return b.year - a.year
+      })
+    } else if (req.query.sort_by == 'date-asc') {
+      newData.sort((a,b) => {
+        return a.year - b.year
       })
     }
   } else {

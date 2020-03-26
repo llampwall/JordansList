@@ -760,8 +760,15 @@ var Category = function (_Component) {
 
   }, {
     key: "render",
+
+
+    // getMakeModelOptions = () => {
+    //       // TODO
+    // }
+
     value: function render() {
 
+      // no results
       if (this.state.itemsData.length == 0) {
         return _react2.default.createElement(
           "div",
@@ -773,6 +780,8 @@ var Category = function (_Component) {
           )
         );
       }
+
+      var gallery = this.state.select_view == "gallery";
 
       return _react2.default.createElement(
         "div",
@@ -942,7 +951,7 @@ var Category = function (_Component) {
               ),
               _react2.default.createElement(
                 "section",
-                { id: "results" },
+                { id: "results", className: "" + (gallery ? '' : 'listview') },
                 this.loopItems()
               )
             )

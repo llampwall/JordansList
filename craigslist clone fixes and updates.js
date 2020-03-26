@@ -205,7 +205,11 @@ if (req.query.sort_by == 'price-dsc') {
   })
 }
 
-5. a couple helper devices to clean up displaying the car city and price in Categories,
+6. make the view selector work client side in Caterory render()
+let gallery = (this.state.select_view == "gallery")  // at the top of the function
+<section id='results' className={`${gallery ? '' : 'listview'}`}>{this.loopItems()}</section>
+
+7. a couple helper devices to clean up displaying the car city and price in Categories,
 and also to handle zero results.
 // cityTranslator['bos'] = 'Boston, MA'
 var cityTranslator = {
@@ -236,7 +240,6 @@ prev/next buttons on item page?
 fix hack for GET /la/for-sale/id case
 make / model selectors
 populate selectors with data
-list view
 page max and pagination
 
 populate with more data

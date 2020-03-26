@@ -66,6 +66,7 @@ a {
         }
 
         .clear-btn {
+          display: none;
           background: white;
           color: $darkslate;
         }
@@ -107,6 +108,10 @@ a {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 20px;
+
+      &.listview {
+        grid-template-columns: 1fr;
+      }
 
       .item {
         box-shadow: 0 5px 10px 0 rgba(135,131,135,1);
