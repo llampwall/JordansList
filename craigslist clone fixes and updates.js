@@ -203,6 +203,14 @@ if (req.query.sort_by == 'price-dsc') {
   newData.sort((a,b) => {
     return a.price - b.price
   })
+} else if (req.query.sort_by == 'date-dsc') {
+  newData.sort((a,b) => {
+    return b.year - a.year
+  })
+} else if (req.query.sort_by == 'date-asc') {
+  newData.sort((a,b) => {
+    return a.year - b.year
+  })
 }
 
 6. make the view selector work client side in Caterory render()
@@ -235,15 +243,22 @@ if (this.state.itemsData.length == 0) {
   );
 }
 
+8. make and model selector functionality. this is done except for one minor issue,
+you can see how it works in the source code. It just has a problem where the make
+selector can only get data from the already filtered data. I'll fix it soon.
+
+
+9. generate testing data - this tool deserves a course on its own:
+https://www.mockaroo.com/schemas/222572
+^that is how i populated the site with 1000 car listings.
+
 TODO:
 prev/next buttons on item page?
 fix hack for GET /la/for-sale/id case
-make / model selectors
-populate selectors with data
+make / model selectors?
 page max and pagination
 
 populate with more data
-get a lot more images
 general styling
 
 search bar / trending now
