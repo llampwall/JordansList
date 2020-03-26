@@ -20,7 +20,7 @@ var _reactDom = __webpack_require__(83);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(154);
+var _reactRouterDom = __webpack_require__(107);
 
 var _Header = __webpack_require__(268);
 
@@ -116,7 +116,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Gallery = function (_Component) {
   _inherits(Gallery, _Component);
 
-  function Gallery() {
+  function Gallery(props) {
     _classCallCheck(this, Gallery);
 
     var _this = _possibleConstructorReturn(this, (Gallery.__proto__ || Object.getPrototypeOf(Gallery)).call(this));
@@ -154,13 +154,26 @@ var Gallery = function (_Component) {
   }
 
   _createClass(Gallery, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var allImgs = ['/img/car.jpg', '/img/car2.jpg', '/img/car3.gif', '/img/car4.jpg', '/img/car5.jpg', '/img/car6.jpg'];
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var allImgs = [this.state.image, '/img/car2.jpg', '/img/car3.gif', '/img/car4.jpg', '/img/car5.jpg', '/img/car6.jpg'];
 
       this.setState({
         allImgs: allImgs
       });
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      // update the state and rerender when we get props
+      if (nextProps.image !== this.props.image) {
+        var img = nextProps.image;
+        this.setState({
+          allImgs: [img, '/img/car2.jpg', '/img/car3.gif', '/img/car4.jpg', '/img/car5.jpg', '/img/car6.jpg']
+        });
+      }
+
+      console.log(this.state);
     }
   }, {
     key: 'render',
@@ -170,6 +183,7 @@ var Gallery = function (_Component) {
           location = _props.location,
           history = _props.history;
 
+      console.log(this.props);
 
       return _react2.default.createElement(
         'div',
@@ -230,9 +244,9 @@ var _react = __webpack_require__(23);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(154);
+var _reactRouterDom = __webpack_require__(107);
 
-var _axios = __webpack_require__(108);
+var _axios = __webpack_require__(85);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -440,13 +454,15 @@ var _react = __webpack_require__(23);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(108);
+var _axios = __webpack_require__(85);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 var _queryString = __webpack_require__(504);
 
 var _queryString2 = _interopRequireDefault(_queryString);
+
+var _reactRouterDom = __webpack_require__(107);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -477,16 +493,30 @@ var Category = function (_Component) {
         currency: "USD"
       });
 
+      var cityTranslator = {
+        'la': 'Los Angeles, CA',
+        'nyc': 'New York City, NY',
+        'mia': 'Miami, FL',
+        'bos': 'Boston, MA'
+      };
+
+      var match = _this.props.match;
+      var listing = "";
+      if (match.params.listings != undefined) {
+        listing = "/" + match.params.listings;
+      }
+      var addr = "/" + match.params.city + "/" + match.params.category + listing;
+
       return _this.state.itemsData.map(function (item, index) {
         return _react2.default.createElement(
-          "div",
-          { className: "item", key: (item, index) },
+          _reactRouterDom.Link,
+          { to: addr + "/" + item.id, className: "item", key: item.id },
           _react2.default.createElement(
             "div",
             {
               className: "image",
               style: {
-                backgroundImage: "url('" + item.images[0] + "')"
+                backgroundImage: "url('" + item.images + "')"
               }
             },
             _react2.default.createElement(
@@ -501,13 +531,13 @@ var Category = function (_Component) {
             _react2.default.createElement(
               "h5",
               null,
-              item.year + " " + item.details.make + " " + item.details.model
+              item.year + " " + item.make + " " + item.model
             ),
             _react2.default.createElement("i", { className: "fa fa-star" }),
             _react2.default.createElement(
               "h6",
               null,
-              "Beverly Hills"
+              cityTranslator[item.city]
             )
           )
         );
@@ -622,41 +652,35 @@ var Category = function (_Component) {
           select_view = _this$state.select_view,
           sort_by = _this$state.sort_by;
 
-      console.log(match);
+      // check if :listing is set, and use it if it is
 
       var listing = "";
       if (match.params.listings != undefined) {
         listing = "/" + match.params.listings;
       }
 
-      document.location.href = "/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by;
+      // document.location.href = `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
 
-      // history.push(
-      //   `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`
-      // );
-      //
-      // const queryParams = qs.parse(this.props.location.search);
-      // if (queryParams.min_price != undefined) {
-      //   console.log("update queryParams: ");
-      //   console.log(queryParams);
-      //   axios
-      //     .get(
-      //       `/api/${match.params.city}/${match.params.category}${listing}?min_price=${queryParams.min_price}&max_price=${queryParams.max_price}&select_view=${queryParams.select_view}&sort_by=${queryParams.sort_by}`
-      //     )
-      //     .then(function(response) {
-      //       self.setState(
-      //         {
-      //           itemsData: response.data
-      //         },
-      //         () => {
-      //           console.log(self.state);
-      //         }
-      //       );
-      //     })
-      //     .catch(function(error) {
-      //       console.log(error);
-      //     });
-      // }
+      var newSearch = "min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by;
+
+      history.push("/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + min_price + "&max_price=" + max_price + "&select_view=" + select_view + "&sort_by=" + sort_by);
+
+      location = _this.props.location;
+      console.log(newSearch);
+
+      var queryParams = _queryString2.default.parse(newSearch);
+
+      if (queryParams.min_price != undefined) {
+        _axios2.default.get("/api/" + match.params.city + "/" + match.params.category + listing + "?min_price=" + queryParams.min_price + "&max_price=" + queryParams.max_price + "&select_view=" + queryParams.select_view + "&sort_by=" + queryParams.sort_by).then(function (response) {
+          self.setState({
+            itemsData: response.data
+          }, function () {
+            console.log(self.state);
+          });
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     };
 
     _this.state = {
@@ -683,6 +707,7 @@ var Category = function (_Component) {
 
       var self = this;
 
+      // check if :listing is set, and use it if it is
       var listing = "";
       if (match.params.listings != undefined) {
         listing = "/" + match.params.listings;
@@ -735,11 +760,18 @@ var Category = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _props2 = this.props,
-          match = _props2.match,
-          location = _props2.location,
-          history = _props2.history;
 
+      if (this.state.itemsData.length == 0) {
+        return _react2.default.createElement(
+          "div",
+          { className: "oops" },
+          _react2.default.createElement(
+            "h1",
+            null,
+            "Sorry, no results found."
+          )
+        );
+      }
 
       return _react2.default.createElement(
         "div",
@@ -886,7 +918,7 @@ var Category = function (_Component) {
                     },
                     _react2.default.createElement(
                       "option",
-                      { value: "price-desc" },
+                      { value: "price-dsc" },
                       "Price - Highest"
                     ),
                     _react2.default.createElement(
@@ -896,7 +928,7 @@ var Category = function (_Component) {
                     ),
                     _react2.default.createElement(
                       "option",
-                      { value: "date-desc" },
+                      { value: "date-dsc" },
                       "Newest"
                     ),
                     _react2.default.createElement(
@@ -942,9 +974,9 @@ var _react = __webpack_require__(23);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(154);
+var _reactRouterDom = __webpack_require__(107);
 
-var _axios = __webpack_require__(108);
+var _axios = __webpack_require__(85);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -1150,6 +1182,10 @@ var _Gallery = __webpack_require__(267);
 
 var _Gallery2 = _interopRequireDefault(_Gallery);
 
+var _axios = __webpack_require__(85);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1170,18 +1206,53 @@ var Item = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this));
 
-    _this.state = {};
+    _this.state = {
+      itemData: {}
+    };
     return _this;
   }
 
   _createClass(Item, [{
-    key: 'render',
-    value: function render() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       var _props = this.props,
           match = _props.match,
-          location = _props.location,
           history = _props.history;
 
+      // temp fix for not having :listings set
+
+      var listings = match.params.listings;
+      var item = match.params.listings;
+      if (match.params.item == undefined) {
+        listings = 'cars-and-trucks';
+      } else {
+        item = match.params.item;
+      }
+
+      // http request spoof
+      var self = this;
+      _axios2.default.get('/api/' + match.params.city + '/' + match.params.category + '/' + listings + '/' + item).then(function (response) {
+        self.setState({
+          itemData: response.data
+        }, function () {
+          console.log(self.state);
+        });
+      }).catch(function (error) {
+        console.log(error);
+      }).then(function () {});
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var item = this.state.itemData;
+
+      var image = item.images;
+
+      var formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        minimumFractionDigits: 0,
+        currency: "USD"
+      });
 
       return _react2.default.createElement(
         'div',
@@ -1240,7 +1311,7 @@ var Item = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'media-col' },
-                _react2.default.createElement(_Gallery2.default, null)
+                _react2.default.createElement(_Gallery2.default, { image: image })
               ),
               _react2.default.createElement(
                 'div',
@@ -1249,17 +1320,18 @@ var Item = function (_Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'date' },
-                  'posted Feb 2, 2020'
+                  'Listed on ',
+                  item.uploaded
                 ),
                 _react2.default.createElement(
                   'h3',
                   { className: 'title' },
-                  'White 2020 Porsche Taycan Coupe'
+                  item.title
                 ),
                 _react2.default.createElement(
                   'h4',
                   { className: 'price' },
-                  '$132,000'
+                  formatter.format(item.price)
                 ),
                 _react2.default.createElement(
                   'div',
@@ -1275,7 +1347,7 @@ var Item = function (_Component) {
                     _react2.default.createElement(
                       'h5',
                       null,
-                      'SDAK234HFCKF284NF'
+                      item.vin
                     )
                   ),
                   _react2.default.createElement(
@@ -1289,7 +1361,7 @@ var Item = function (_Component) {
                     _react2.default.createElement(
                       'h5',
                       null,
-                      '22.4 MPG'
+                      item.mpg
                     )
                   ),
                   _react2.default.createElement(
@@ -1303,7 +1375,7 @@ var Item = function (_Component) {
                     _react2.default.createElement(
                       'h5',
                       null,
-                      '6 Speed Manual'
+                      item.trans
                     )
                   ),
                   _react2.default.createElement(
@@ -1317,7 +1389,7 @@ var Item = function (_Component) {
                     _react2.default.createElement(
                       'h5',
                       null,
-                      '47,664 Miles'
+                      item.miles + ' Miles'
                     )
                   ),
                   _react2.default.createElement(
@@ -1331,7 +1403,7 @@ var Item = function (_Component) {
                     _react2.default.createElement(
                       'h5',
                       null,
-                      'White / Grey'
+                      item.color
                     )
                   ),
                   _react2.default.createElement(
@@ -1345,7 +1417,7 @@ var Item = function (_Component) {
                     _react2.default.createElement(
                       'h5',
                       null,
-                      '573 HP'
+                      item.hp
                     )
                   )
                 ),
@@ -1355,7 +1427,7 @@ var Item = function (_Component) {
                   _react2.default.createElement(
                     'p',
                     null,
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum justo ante, ornare eget ultricies eu, sodales ut massa. Aliquam porttitor ex eu enim commodo, sit amet feugiat elit pretium. Aliquam erat volutpat. Vivamus vitae dolor nibh. Aenean faucibus magna at urna facilisis, eu lacinia odio aliquam. Nunc fermentum mi sem, nec bibendum nulla auctor nec. Praesent rutrum urna quis risus maximus, tincidunt cursus orci sagittis. Nunc imperdiet tellus ut consectetur bibendum. Nunc hendrerit malesuada finibus. Nam quis libero nisl. Nullam posuere dolor quis augue commodo consectetur id quis dui. Sed euismod nulla at egestas pellentesque.'
+                    item.desc
                   )
                 )
               )

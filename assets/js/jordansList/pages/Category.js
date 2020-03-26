@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import qs from "query-string";
+import { Link } from "react-router-dom";
 
 // this is for showing all listings
 // ex. url: 'la/for-sale' or '/la/for-sale/cars-and-trucks'
@@ -23,6 +24,7 @@ export default class Category extends Component {
     const { match, location, history } = this.props;
     const self = this;
 
+    // check if :listing is set, and use it if it is
     let listing = "";
     if (match.params.listings != undefined) {
       listing = "/" + match.params.listings;
@@ -80,23 +82,37 @@ export default class Category extends Component {
       currency: "USD"
     });
 
+    var cityTranslator = {
+      'la': 'Los Angeles, CA',
+      'nyc': 'New York City, NY',
+      'mia': 'Miami, FL',
+      'bos': 'Boston, MA'
+    }
+
+    const match = this.props.match;
+    let listing = "";
+    if (match.params.listings != undefined) {
+      listing = "/" + match.params.listings;
+    }
+    const addr = `/${match.params.city}/${match.params.category}${listing}`
+
     return this.state.itemsData.map((item, index) => {
       return (
-        <div className="item" key={(item, index)}>
+        <Link to={`${addr}/${item.id}`} className="item" key={item.id}>
           <div
             className="image"
             style={{
-              backgroundImage: `url('${item.images[0]}')`
+              backgroundImage: `url('${item.images}')`
             }}
           >
             <div className="price">{formatter.format(item.price)}</div>
           </div>
           <div className="details">
-            <h5>{`${item.year} ${item.details.make} ${item.details.model}`}</h5>
+            <h5>{`${item.year} ${item.make} ${item.model}`}</h5>
             <i className="fa fa-star"></i>
-            <h6>Beverly Hills</h6>
+            <h6>{cityTranslator[item.city]}</h6>
           </div>
-        </div>
+        </Link>
       );
     });
   };
@@ -162,47 +178,60 @@ export default class Category extends Component {
   // handle update button click
   submitFilters = () => {
     const self = this;
-    const { match, location, history } = this.props;
+    let { match, location, history } = this.props;
     const { min_price, max_price, select_view, sort_by } = this.state;
-    console.log(match);
 
+    // check if :listing is set, and use it if it is
     let listing = "";
     if (match.params.listings != undefined) {
       listing = "/" + match.params.listings;
     }
 
-    document.location.href = `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
+    // document.location.href = `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
 
-    // history.push(
-    //   `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`
-    // );
-    //
-    // const queryParams = qs.parse(this.props.location.search);
-    // if (queryParams.min_price != undefined) {
-    //   console.log("update queryParams: ");
-    //   console.log(queryParams);
-    //   axios
-    //     .get(
-    //       `/api/${match.params.city}/${match.params.category}${listing}?min_price=${queryParams.min_price}&max_price=${queryParams.max_price}&select_view=${queryParams.select_view}&sort_by=${queryParams.sort_by}`
-    //     )
-    //     .then(function(response) {
-    //       self.setState(
-    //         {
-    //           itemsData: response.data
-    //         },
-    //         () => {
-    //           console.log(self.state);
-    //         }
-    //       );
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error);
-    //     });
-    // }
+    let newSearch = `min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`;
+
+    history.push(
+      `/${match.params.city}/${match.params.category}${listing}?min_price=${min_price}&max_price=${max_price}&select_view=${select_view}&sort_by=${sort_by}`
+    );
+
+    location = this.props.location;
+    console.log(newSearch);
+
+    let queryParams = qs.parse(newSearch);
+
+    if (queryParams.min_price != undefined) {
+      axios
+        .get(
+          `/api/${match.params.city}/${match.params.category}${listing}?min_price=${queryParams.min_price}&max_price=${queryParams.max_price}&select_view=${queryParams.select_view}&sort_by=${queryParams.sort_by}`
+        )
+        .then(function(response) {
+          self.setState(
+            {
+              itemsData: response.data
+            },
+            () => {
+              console.log(self.state);
+            }
+          );
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
   };
 
   render() {
-    const { match, location, history } = this.props;
+
+    if (this.state.itemsData.length == 0) {
+      return (
+        <div className="oops">
+          <h1>
+            Sorry, no results found.
+          </h1>
+        </div>
+      );
+    }
 
     return (
       <div className="listings">
@@ -267,9 +296,9 @@ export default class Category extends Component {
                     value={this.state.sort_by}
                     onChange={this.handleChange}
                   >
-                    <option value="price-desc">Price - Highest</option>
+                    <option value="price-dsc">Price - Highest</option>
                     <option value="price-asc">Price - Lowest</option>
-                    <option value="date-desc">Newest</option>
+                    <option value="date-dsc">Newest</option>
                     <option value="date-asc">Oldest</option>
                   </select>
                 </div>

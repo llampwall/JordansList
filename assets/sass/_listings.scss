@@ -1,5 +1,21 @@
 // this is actually for the Categories component
 
+a {
+  text-decoration: none;
+}
+
+.oops {
+  width: 100%;
+  text-align: center;
+
+  h1 {
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    padding: 50px;
+  }
+}
+
 .listings {
   background: white;
 

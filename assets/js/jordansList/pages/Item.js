@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Gallery from '../components/Gallery.js'
+import axios from "axios";
 
 // the component for looking at a specific item
 // ex. url: '/la/for-sale/2020-Porsche-Taycan'
@@ -8,11 +9,54 @@ import Gallery from '../components/Gallery.js'
 export default class Item extends Component {
   constructor () {
     super()
-    this.state = {}
+    this.state = {
+      itemData: {}
+    }
+  }
+
+  componentDidMount() {
+    const { match, history } = this.props;
+
+    // temp fix for not having :listings set
+    let listings = match.params.listings
+    let item = match.params.listings
+    if (match.params.item == undefined) {
+      listings = 'cars-and-trucks'
+    } else {
+      item = match.params.item
+    }
+
+    // http request spoof
+    const self = this;
+    axios
+      .get(`/api/${match.params.city}/${match.params.category}/${listings}/${item}`)
+      .then(function(response) {
+        self.setState(
+          {
+            itemData: response.data
+          },
+          () => {
+            console.log(self.state);
+          }
+        );
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+      .then(function() {});
   }
 
   render () {
-    const {match, location, history} = this.props;
+    const item = this.state.itemData
+
+    const image = item.images
+
+
+    var formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      minimumFractionDigits: 0,
+      currency: "USD"
+    });
 
     return (
       <div className='item-page'>
@@ -34,44 +78,44 @@ export default class Item extends Component {
             <section id='item-content'>
 
               <div className='media-col'>
-                <Gallery />
+                <Gallery image={image}/>
               </div>
 
               <div className='details-col'>
                 <i className='fa fa-star'></i>
-                <div className='date'>posted Feb 2, 2020</div>
-                <h3 className='title'>White 2020 Porsche Taycan Coupe</h3>
-                <h4 className='price'>$132,000</h4>
+                <div className='date'>Listed on {item.uploaded}</div>
+                <h3 className='title'>{item.title}</h3>
+                <h4 className='price'>{formatter.format(item.price)}</h4>
 
                 <div className='specs'>
                   <div className='info'>
                     <label>VIN</label>
-                    <h5>SDAK234HFCKF284NF</h5>
+                    <h5>{item.vin}</h5>
                   </div>
                   <div className='info'>
                     <label>Mileage</label>
-                    <h5>22.4 MPG</h5>
+                    <h5>{item.mpg}</h5>
                   </div>
                   <div className='info'>
                     <label>Transmission</label>
-                    <h5>6 Speed Manual</h5>
+                    <h5>{item.trans}</h5>
                   </div>
                   <div className='info'>
                     <label>Odometer</label>
-                    <h5>47,664 Miles</h5>
+                    <h5>{`${item.miles} Miles`}</h5>
                   </div>
                   <div className='info'>
                     <label>Color</label>
-                    <h5>White / Grey</h5>
+                    <h5>{item.color}</h5>
                   </div>
                   <div className='info'>
                     <label>Horsepower</label>
-                    <h5>573 HP</h5>
+                    <h5>{item.hp}</h5>
                   </div>
                 </div>
 
                 <div className="description">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum justo ante, ornare eget ultricies eu, sodales ut massa. Aliquam porttitor ex eu enim commodo, sit amet feugiat elit pretium. Aliquam erat volutpat. Vivamus vitae dolor nibh. Aenean faucibus magna at urna facilisis, eu lacinia odio aliquam. Nunc fermentum mi sem, nec bibendum nulla auctor nec. Praesent rutrum urna quis risus maximus, tincidunt cursus orci sagittis. Nunc imperdiet tellus ut consectetur bibendum. Nunc hendrerit malesuada finibus. Nam quis libero nisl. Nullam posuere dolor quis augue commodo consectetur id quis dui. Sed euismod nulla at egestas pellentesque.</p>
+                  <p>{item.desc}</p>
                 </div>
               </div>
 

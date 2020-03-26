@@ -3,20 +3,32 @@ import React, { Component } from 'react'
 // custom modular gallery component
 
 export default class Gallery extends Component {
-  constructor () {
+  constructor (props) {
     super()
     this.state = {
       allImgs: [],
-      currIndex: 0
+      currIndex: 0,
     }
   }
 
-  componentWillMount() {
-    const allImgs = ['/img/car.jpg','/img/car2.jpg','/img/car3.gif','/img/car4.jpg','/img/car5.jpg','/img/car6.jpg'];
+  componentDidMount() {
+    const allImgs = [this.state.image,'/img/car2.jpg','/img/car3.gif','/img/car4.jpg','/img/car5.jpg','/img/car6.jpg'];
 
     this.setState({
       allImgs
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // update the state and rerender when we get props
+    if (nextProps.image !== this.props.image) {
+      let img = nextProps.image
+      this.setState({
+        allImgs: [img,'/img/car2.jpg','/img/car3.gif','/img/car4.jpg','/img/car5.jpg','/img/car6.jpg']
+      });
+    }
+
+    console.log(this.state)
   }
 
   prevBtn = () => {
@@ -49,6 +61,7 @@ export default class Gallery extends Component {
 
   render () {
     const {match, location, history} = this.props;
+    console.log(this.props)
 
     return (
       <div className='gallery'>

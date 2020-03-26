@@ -3,7 +3,7 @@ const serveStatic = require("serve-static");
 const path = require("path");
 const categoriesData = require("./data/categories.js");
 const citiesData = require("./data/cities.js");
-const itemsData = require("./data/items.js");
+const itemsData = require("./data/1000cars.js");
 
 //create express app
 const app = express();
@@ -25,7 +25,6 @@ app.get("/api/:city/:category", function(req, res) {
   console.log(req.params);
   let newData;
 
-  //this is only being called once for some reason
   if (req.query.min_price != undefined) {
     console.log(req.query);
     newData = itemsData.filter(item => {
@@ -36,6 +35,15 @@ app.get("/api/:city/:category", function(req, res) {
         item.price <= req.query.max_price
       );
     });
+    if (req.query.sort_by == 'price-dsc') {
+      newData.sort((a,b) => {
+        return b.price - a.price
+      })
+    } else if (req.query.sort_by == 'price-asc') {
+      newData.sort((a,b) => {
+        return a.price - b.price
+      })
+    }
   } else {
     newData = itemsData.filter(item => {
       return (
@@ -51,7 +59,6 @@ app.get("/api/:city/:category/:listings", function(req, res) {
   console.log(req.params);
   let newData;
 
-  //this is only being called once for some reason
   if (req.query.min_price != undefined) {
     console.log(req.query);
     newData = itemsData.filter(item => {
@@ -62,6 +69,15 @@ app.get("/api/:city/:category/:listings", function(req, res) {
         item.price <= req.query.max_price
       );
     });
+    if (req.query.sort_by == 'price-dsc') {
+      newData.sort((a,b) => {
+        return b.price - a.price
+      })
+    } else if (req.query.sort_by == 'price-asc') {
+      newData.sort((a,b) => {
+        return a.price - b.price
+      })
+    }
   } else {
     newData = itemsData.filter(item => {
       return (
@@ -76,7 +92,19 @@ app.get("/api/:city/:category/:listings", function(req, res) {
 
 // get a specific listing
 app.get("/api/:city/:category/:listings/:item", function(req, res) {
-  res.json(itemsData);
+  console.log(req.params);
+  let newData;
+
+  if (req.params.item != undefined) {
+    let item = parseInt(req.params.item)
+
+    if (item > 0 && item < itemsData.length) {
+      console.log(item);
+      res.json(itemsData[item-1]);
+    } else {
+      console.log("404");
+    }
+  }
 });
 
 // everything else
