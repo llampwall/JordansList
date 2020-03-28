@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { changeBackground } from "./bgFader.js"
 
 export default class Header extends Component {
   constructor() {
@@ -66,6 +67,7 @@ export default class Header extends Component {
         selectedCity: city.title
       },
       () => {
+        changeBackground(city.slug)
         const { match, history } = this.props;
         history.push(`/${city.slug}`);
       }

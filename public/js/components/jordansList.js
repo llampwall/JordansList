@@ -1,6 +1,65 @@
 webpackJsonp([0],{
 
-/***/ 246:
+/***/ 166:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var bgFader = function () {
+  function bgFader() {
+    _classCallCheck(this, bgFader);
+  }
+
+  _createClass(bgFader, [{
+    key: 'changeBackground',
+
+
+    // handle background changing
+    value: function changeBackground(city) {
+      if (city == 'mia') {
+        document.getElementsByClassName('la')[0].classList.remove('opaque');
+        document.getElementsByClassName('nyc')[0].classList.remove('opaque');
+        document.getElementsByClassName('bos')[0].classList.remove('opaque');
+        document.getElementsByClassName('mia')[0].classList.add('opaque');
+      } else if (city == 'nyc') {
+        document.getElementsByClassName('la')[0].classList.remove('opaque');
+        document.getElementsByClassName('nyc')[0].classList.add('opaque');
+        document.getElementsByClassName('bos')[0].classList.remove('opaque');
+        document.getElementsByClassName('mia')[0].classList.remove('opaque');
+      } else if (city == 'bos') {
+        document.getElementsByClassName('la')[0].classList.remove('opaque');
+        document.getElementsByClassName('nyc')[0].classList.remove('opaque');
+        document.getElementsByClassName('bos')[0].classList.add('opaque');
+        document.getElementsByClassName('mia')[0].classList.remove('opaque');
+      } else {
+        document.getElementsByClassName('la')[0].classList.add('opaque');
+        document.getElementsByClassName('nyc')[0].classList.remove('opaque');
+        document.getElementsByClassName('bos')[0].classList.remove('opaque');
+        document.getElementsByClassName('mia')[0].classList.remove('opaque');
+      }
+    }
+  }]);
+
+  return bgFader;
+}();
+
+var _ref = new bgFader();
+
+var changeBackground = _ref.changeBackground;
+exports.changeBackground = changeBackground;
+
+/***/ }),
+
+/***/ 247:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22,19 +81,19 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(107);
 
-var _Header = __webpack_require__(268);
+var _Header = __webpack_require__(269);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _Home = __webpack_require__(271);
+var _Home = __webpack_require__(272);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _Category = __webpack_require__(270);
+var _Category = __webpack_require__(271);
 
 var _Category2 = _interopRequireDefault(_Category);
 
-var _Item = __webpack_require__(272);
+var _Item = __webpack_require__(273);
 
 var _Item2 = _interopRequireDefault(_Item);
 
@@ -87,7 +146,7 @@ exports.default = App;
 
 /***/ }),
 
-/***/ 267:
+/***/ 268:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -228,7 +287,7 @@ exports.default = Gallery;
 
 /***/ }),
 
-/***/ 268:
+/***/ 269:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -249,6 +308,8 @@ var _reactRouterDom = __webpack_require__(107);
 var _axios = __webpack_require__(85);
 
 var _axios2 = _interopRequireDefault(_axios);
+
+var _bgFader = __webpack_require__(166);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -289,6 +350,7 @@ var Header = function (_Component) {
       _this.setState({
         selectedCity: city.title
       }, function () {
+        (0, _bgFader.changeBackground)(city.slug);
         var _this$props = _this.props,
             match = _this$props.match,
             history = _this$props.history;
@@ -412,7 +474,7 @@ exports.default = Header;
 
 /***/ }),
 
-/***/ 269:
+/***/ 270:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -426,7 +488,7 @@ var _reactDom = __webpack_require__(83);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(246);
+var _App = __webpack_require__(247);
 
 var _App2 = _interopRequireDefault(_App);
 
@@ -438,7 +500,7 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), ap
 
 /***/ }),
 
-/***/ 270:
+/***/ 271:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -458,7 +520,7 @@ var _axios = __webpack_require__(85);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _queryString = __webpack_require__(504);
+var _queryString = __webpack_require__(505);
 
 var _queryString2 = _interopRequireDefault(_queryString);
 
@@ -1004,7 +1066,7 @@ exports.default = Category;
 
 /***/ }),
 
-/***/ 271:
+/***/ 272:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1025,6 +1087,8 @@ var _reactRouterDom = __webpack_require__(107);
 var _axios = __webpack_require__(85);
 
 var _axios2 = _interopRequireDefault(_axios);
+
+var _bgFader = __webpack_require__(166);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1098,6 +1162,8 @@ var Home = function (_Component) {
         history.push("/la");
         return;
       }
+
+      (0, _bgFader.changeBackground)(match.params.city);
 
       // http request spoof
       var self = this;
@@ -1208,7 +1274,7 @@ exports.default = Home;
 
 /***/ }),
 
-/***/ 272:
+/***/ 273:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1224,7 +1290,7 @@ var _react = __webpack_require__(23);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Gallery = __webpack_require__(267);
+var _Gallery = __webpack_require__(268);
 
 var _Gallery2 = _interopRequireDefault(_Gallery);
 
@@ -1490,4 +1556,4 @@ exports.default = Item;
 
 /***/ })
 
-},[269]);
+},[270]);

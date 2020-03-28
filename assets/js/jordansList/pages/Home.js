@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { changeBackground } from "../includes/bgFader.js"
 
 export default class Home extends Component {
   constructor() {
@@ -18,6 +19,8 @@ export default class Home extends Component {
       history.push("/la");
       return;
     }
+
+    changeBackground(match.params.city)
 
     // http request spoof
     const self = this;
