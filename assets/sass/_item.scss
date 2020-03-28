@@ -178,40 +178,48 @@
       .description {}
     }
   }
-  @media screen and (max-width: 815px) {
-    .item-page {
-      #item-content {
-        display: grid;
-        grid-template-columns: 1fr;
+}
+@media screen and (max-width: 815px) {
+  .item-page {
+    #item-content {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+@media screen and (max-width: 490px) {
+  .item-page {
+    #submenu {
+      display: none;
+    }
 
-        .media-col {
-          .gallery {
-            .slider {
-              .main-img {
-                height: 300px;
-                width: 200px;
-              }
+    #item-content {
+      display: grid;
+      grid-template-columns: 1fr;
+
+      .media-col {
+        .gallery {
+          .slider {
+            .main-img {
+              height: 200px;
+            }
+          }
+
+          .thumbs {
+            grid-template-columns: repeat(6, 1fr);
+
+            .thumb {
+              width: 50px;
+              height: 50px;
             }
           }
         }
       }
-    }
-  }
-  @media screen and (max-width: 815px) {
-    .item-page {
-      #item-content {
-        display: grid;
-        grid-template-columns: 1fr;
 
-        .media-col {
-          .gallery {
-            .slider {
-              .main-img {
-                height: 200px;
-              }
-            }
-          }
+      .details-col {
+        .specs {
+          grid-template-columns: repeat(2, 1fr);
         }
       }
     }
   }
+}
