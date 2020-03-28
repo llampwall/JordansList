@@ -52,7 +52,7 @@ header {
     }
 
     .city {
-      min-width: 200px;
+      min-width: 1vw;
       position: relative;
       font-size: 1rem;
       font-weight: 300;
@@ -115,6 +115,89 @@ header {
       padding: 15px 20px;
       border-radius: 5px;
       cursor: pointer;
+    }
+  }
+}
+@media screen and (max-width: 815px) {
+  header {
+    flex-flow: row;
+
+    .left-menu {
+      a.logo {
+        font-size: 1.5rem;
+      }
+
+      .city {
+        min-width: none;
+      }
+    }
+
+    .right-menu {
+      .post-btn {
+        padding: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  header {
+    .fa {
+      font-size: 0.8rem;
+    }
+
+    .left-menu {
+      a.logo {
+        font-size: 1rem;
+      }
+
+      .city {
+        min-width: none;
+        position: relative;
+        font-size: 0.7rem;
+
+        .fa {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .right-menu {
+      font-size: 0.7rem;
+
+      .post-btn {
+        padding: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 490px) {
+  header {
+    .left-menu {
+      a.logo {
+        font-size: 0.8rem;
+      }
+
+      .city {
+        min-width: none;
+        position: relative;
+        font-size: 0.6rem;
+      }
+    }
+
+    .right-menu {
+      font-size: 0.6rem;
+
+      .post-btn {
+        padding: 10px;
+      }
+
+      .fa {
+        display: none;
+      }
+
+      .user-dropdown {
+        display: none;
+      }
     }
   }
 }

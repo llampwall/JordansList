@@ -170,3 +170,50 @@ a {
     }
   }
 }
+@media screen and (max-width: 815px) {
+  .listings #content #results {
+    grid-template-columns: 3fr;
+  }
+
+  .listings {
+    #filter {
+      display: flex;
+      padding: 10px 0;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+
+        label {
+          font-size: 1rem;
+          padding: 5px 10px;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          color: $darkslate;
+        }
+
+        select {
+          min-width: 50px;
+          background: white;
+          border: 2px solid $darkslate;
+          padding: 3px 10px;
+          font-size: 1rem;
+          color: $darkslate;
+          margin: 0 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 490px) {
+  .listings #content #results {
+    grid-template-columns: 1fr;
+  }
+
+  .listings #filter .form-group.make,
+  .listings #filter .form-group.model {
+    display: none;
+  }
+}

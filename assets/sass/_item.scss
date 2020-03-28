@@ -178,4 +178,40 @@
       .description {}
     }
   }
-}
+  @media screen and (max-width: 815px) {
+    .item-page {
+      #item-content {
+        display: grid;
+        grid-template-columns: 1fr;
+
+        .media-col {
+          .gallery {
+            .slider {
+              .main-img {
+                height: 300px;
+                width: 200px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 815px) {
+    .item-page {
+      #item-content {
+        display: grid;
+        grid-template-columns: 1fr;
+
+        .media-col {
+          .gallery {
+            .slider {
+              .main-img {
+                height: 200px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }

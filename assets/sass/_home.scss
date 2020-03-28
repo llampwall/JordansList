@@ -103,3 +103,31 @@
     }
   }
 }
+@media screen and (max-width: 815px) {
+  .home {
+    h1 {
+      font-size: 2rem;
+      padding: 20px 0;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 10px;
+      margin-bottom: 20px;
+
+      .category {
+        padding: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 490px) {
+  .home {
+    h1 {
+      font-size: 1.5rem;
+      padding: none;
+    }
+  }
+}
