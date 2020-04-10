@@ -81,7 +81,7 @@ export default class Category extends Component {
     // for formatting currency without decimals
     var formatter = new Intl.NumberFormat("en-US", {
       style: "currency",
-      minimumFractionDigits: 0,
+      minimumFractionDigits: 2,
       currency: "USD"
     });
 
@@ -111,7 +111,7 @@ export default class Category extends Component {
             <div className="price">{formatter.format(item.price)}</div>
           </div>
           <div className="details">
-            <h5>{`${item.year} ${item.make} ${item.model}`}</h5>
+            <h5>{`${item.title}`}</h5>
             <i className="fa fa-star"></i>
             <h6>{cityTranslator[item.city]}</h6>
           </div>

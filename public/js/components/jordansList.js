@@ -553,7 +553,7 @@ var Category = function (_Component) {
       // for formatting currency without decimals
       var formatter = new Intl.NumberFormat("en-US", {
         style: "currency",
-        minimumFractionDigits: 0,
+        minimumFractionDigits: 2,
         currency: "USD"
       });
 
@@ -595,7 +595,7 @@ var Category = function (_Component) {
             _react2.default.createElement(
               "h5",
               null,
-              item.year + " " + item.make + " " + item.model
+              "" + item.title
             ),
             _react2.default.createElement("i", { className: "fa fa-star" }),
             _react2.default.createElement(

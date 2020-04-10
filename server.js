@@ -3,7 +3,7 @@ const serveStatic = require("serve-static");
 const path = require("path");
 const categoriesData = require("./data/categories.js");
 const citiesData = require("./data/cities.js");
-const itemsData = require("./data/1000cars.js");
+const itemsData = require("./data/forsale.js");
 
 //create express app
 const app = express();
