@@ -76,6 +76,26 @@ export default class Category extends Component {
     }
   }
 
+  // only show images in the housing and for-sale categories
+  showImages = (url, price) => {
+    const match = this.props.match;
+    console.log(match.params.category)
+    if (match.params.category == 'for-sale' || match.params.category == 'housing' ) {
+      return (
+        <div
+          className="image"
+          style={{
+            backgroundImage: `url('${url}')`
+          }}
+        >
+          <div className="price">{price}</div>
+        </div>
+      );
+    } else {
+      return ("");
+    }
+  }
+
   // get all the item data and loop through it to display
   loopItems = () => {
     // for formatting currency without decimals
@@ -102,14 +122,9 @@ export default class Category extends Component {
     return this.state.itemsData.map((item, index) => {
       return (
         <Link to={`${addr}/${item.id}`} className="item" key={item.id}>
-          <div
-            className="image"
-            style={{
-              backgroundImage: `url('${item.images}')`
-            }}
-          >
-            <div className="price">{formatter.format(item.price)}</div>
-          </div>
+
+          {this.showImages(item.images, formatter.format(item.price))}
+
           <div className="details">
             <h5>{`${item.title}`}</h5>
             <i className="fa fa-star"></i>
@@ -271,6 +286,8 @@ export default class Category extends Component {
 
   render() {
 
+    let { match, location, history } = this.props;
+
     // no results
     if (this.state.itemsData.length == 0) {
       return (
@@ -283,6 +300,9 @@ export default class Category extends Component {
     }
 
     let gallery = (this.state.select_view == "gallery")
+    if (match.params.category != 'for-sale' && match.params.category != 'housing' ) {
+      gallery = false;
+    }
 
     return (
       <div className="listings">

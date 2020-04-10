@@ -549,6 +549,29 @@ var Category = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Category.__proto__ || Object.getPrototypeOf(Category)).call(this));
 
+    _this.showImages = function (url, price) {
+      var match = _this.props.match;
+      console.log(match.params.category);
+      if (match.params.category == 'for-sale' || match.params.category == 'housing') {
+        return _react2.default.createElement(
+          "div",
+          {
+            className: "image",
+            style: {
+              backgroundImage: "url('" + url + "')"
+            }
+          },
+          _react2.default.createElement(
+            "div",
+            { className: "price" },
+            price
+          )
+        );
+      } else {
+        return "";
+      }
+    };
+
     _this.loopItems = function () {
       // for formatting currency without decimals
       var formatter = new Intl.NumberFormat("en-US", {
@@ -575,20 +598,7 @@ var Category = function (_Component) {
         return _react2.default.createElement(
           _reactRouterDom.Link,
           { to: addr + "/" + item.id, className: "item", key: item.id },
-          _react2.default.createElement(
-            "div",
-            {
-              className: "image",
-              style: {
-                backgroundImage: "url('" + item.images + "')"
-              }
-            },
-            _react2.default.createElement(
-              "div",
-              { className: "price" },
-              formatter.format(item.price)
-            )
-          ),
+          _this.showImages(item.images, formatter.format(item.price)),
           _react2.default.createElement(
             "div",
             { className: "details" },
@@ -840,6 +850,9 @@ var Category = function (_Component) {
       }
     }
 
+    // only show images in the housing and for-sale categories
+
+
     // get all the item data and loop through it to display
 
 
@@ -865,8 +878,13 @@ var Category = function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _props2 = this.props,
+          match = _props2.match,
+          location = _props2.location,
+          history = _props2.history;
 
       // no results
+
       if (this.state.itemsData.length == 0) {
         return _react2.default.createElement(
           "div",
@@ -880,6 +898,9 @@ var Category = function (_Component) {
       }
 
       var gallery = this.state.select_view == "gallery";
+      if (match.params.category != 'for-sale' && match.params.category != 'housing') {
+        gallery = false;
+      }
 
       return _react2.default.createElement(
         "div",
