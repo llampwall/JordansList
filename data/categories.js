@@ -185,43 +185,6 @@ module.exports = [
     ]
   },
   {
-    title: 'forums',
-    listings: [
-      {
-        name: 'android',
-        slug: 'android'
-      },
-      {
-        name: 'apple',
-        slug: 'apple'
-      },
-      {
-        name: 'athiest',
-        slug: 'athiest'
-      },
-      {
-        name: 'celebs',
-        slug: 'celebs'
-      },
-      {
-        name: 'comp',
-        slug: 'comp'
-      },
-      {
-        name: 'gaming',
-        slug: 'gaming'
-      },
-      {
-        name: 'marriage',
-        slug: 'marriage'
-      },
-      {
-        name: 'music',
-        slug: 'music'
-      }
-    ]
-  },
-  {
     title: 'gigs',
     listings: [
       {
