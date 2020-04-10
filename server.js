@@ -3,7 +3,7 @@ const serveStatic = require("serve-static");
 const path = require("path");
 const categoriesData = require("./data/categories.js");
 const citiesData = require("./data/cities.js");
-const itemsData = require("./data/forsale.js");
+const itemsData = require("./data/everything.js");
 
 //create express app
 const app = express();
@@ -158,7 +158,7 @@ app.get("/api/:city/:category/:listings/:item", function(req, res) {
       console.log(item);
       res.json(itemsData[item-1]);
     } else {
-      console.log("404");
+      console.log("404 not found");
     }
   }
 });
