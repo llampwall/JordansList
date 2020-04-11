@@ -588,11 +588,12 @@ var Category = function (_Component) {
       };
 
       var match = _this.props.match;
-      var listing = "";
+      var addr = "/" + match.params.city + "/" + match.params.category;
       if (match.params.listings != undefined) {
-        listing = "/" + match.params.listings;
+        addr += "/" + match.params.listings;
+      } else {
+        addr += "/x";
       }
-      var addr = "/" + match.params.city + "/" + match.params.category + listing;
 
       return _this.state.itemsData.map(function (item, index) {
         return _react2.default.createElement(

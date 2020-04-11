@@ -113,11 +113,13 @@ export default class Category extends Component {
     }
 
     const match = this.props.match;
-    let listing = "";
+    let addr = `/${match.params.city}/${match.params.category}`
     if (match.params.listings != undefined) {
-      listing = "/" + match.params.listings;
+      addr += ("/" + match.params.listings)
+    } else {
+      addr += "/x"
     }
-    const addr = `/${match.params.city}/${match.params.category}${listing}`
+
 
     return this.state.itemsData.map((item, index) => {
       return (
