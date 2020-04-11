@@ -242,7 +242,7 @@ var Gallery = function (_Component) {
           location = _props.location,
           history = _props.history;
 
-      console.log(this.props);
+      console.log("image: " + this.props);
 
       return _react2.default.createElement(
         'div',
@@ -1339,6 +1339,185 @@ var Item = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this));
 
+    _this.displayItemInfo = function (item) {
+      var _this$props = _this.props,
+          match = _this$props.match,
+          history = _this$props.history;
+
+
+      var formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        minimumFractionDigits: 0,
+        currency: "USD"
+      });
+
+      if (match.params.category == 'for-sale' || match.params.category == 'housing') {
+        return _react2.default.createElement(
+          'section',
+          { id: 'item-content' },
+          _react2.default.createElement(
+            'div',
+            { className: 'media-col' },
+            _react2.default.createElement(_Gallery2.default, { image: item.images })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'details-col' },
+            _react2.default.createElement('i', { className: 'fa fa-star' }),
+            _react2.default.createElement(
+              'div',
+              { className: 'date' },
+              'Listed on ',
+              item.uploaded
+            ),
+            _react2.default.createElement(
+              'h3',
+              { className: 'title' },
+              item.title
+            ),
+            _react2.default.createElement(
+              'h4',
+              { className: 'price' },
+              formatter.format(item.price)
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'specs' },
+              _react2.default.createElement(
+                'div',
+                { className: 'info' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'VIN'
+                ),
+                _react2.default.createElement(
+                  'h5',
+                  null,
+                  item.vin
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'info' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'Mileage'
+                ),
+                _react2.default.createElement(
+                  'h5',
+                  null,
+                  item.mpg
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'info' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'Transmission'
+                ),
+                _react2.default.createElement(
+                  'h5',
+                  null,
+                  item.trans
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'info' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'Odometer'
+                ),
+                _react2.default.createElement(
+                  'h5',
+                  null,
+                  item.miles + ' Miles'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'info' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'Color'
+                ),
+                _react2.default.createElement(
+                  'h5',
+                  null,
+                  item.color
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'info' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'Horsepower'
+                ),
+                _react2.default.createElement(
+                  'h5',
+                  null,
+                  item.hp
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'description' },
+              _react2.default.createElement(
+                'p',
+                null,
+                item.desc
+              )
+            )
+          )
+        );
+      } else {
+
+        return _react2.default.createElement(
+          'section',
+          { id: 'item-content' },
+          _react2.default.createElement(
+            'div',
+            { className: 'details-col' },
+            _react2.default.createElement('i', { className: 'fa fa-star' }),
+            _react2.default.createElement(
+              'div',
+              { className: 'date' },
+              'Listed on ',
+              item.uploaded
+            ),
+            _react2.default.createElement(
+              'h3',
+              { className: 'title' },
+              item.title
+            ),
+            _react2.default.createElement(
+              'h4',
+              { className: 'price' },
+              formatter.format(item.price)
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'description' },
+              _react2.default.createElement(
+                'p',
+                null,
+                item.desc
+              )
+            )
+          )
+        );
+      }
+    };
+
     _this.state = {
       itemData: {}
     };
@@ -1378,13 +1557,6 @@ var Item = function (_Component) {
     key: 'render',
     value: function render() {
       var item = this.state.itemData;
-      var image = item.images; // fix this later
-
-      var formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        minimumFractionDigits: 0,
-        currency: "USD"
-      });
 
       return _react2.default.createElement(
         'div',
@@ -1437,133 +1609,7 @@ var Item = function (_Component) {
                 )
               )
             ),
-            _react2.default.createElement(
-              'section',
-              { id: 'item-content' },
-              _react2.default.createElement(
-                'div',
-                { className: 'media-col' },
-                _react2.default.createElement(_Gallery2.default, { image: image })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'details-col' },
-                _react2.default.createElement('i', { className: 'fa fa-star' }),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'date' },
-                  'Listed on ',
-                  item.uploaded
-                ),
-                _react2.default.createElement(
-                  'h3',
-                  { className: 'title' },
-                  item.title
-                ),
-                _react2.default.createElement(
-                  'h4',
-                  { className: 'price' },
-                  formatter.format(item.price)
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'specs' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'info' },
-                    _react2.default.createElement(
-                      'label',
-                      null,
-                      'VIN'
-                    ),
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      item.vin
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'info' },
-                    _react2.default.createElement(
-                      'label',
-                      null,
-                      'Mileage'
-                    ),
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      item.mpg
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'info' },
-                    _react2.default.createElement(
-                      'label',
-                      null,
-                      'Transmission'
-                    ),
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      item.trans
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'info' },
-                    _react2.default.createElement(
-                      'label',
-                      null,
-                      'Odometer'
-                    ),
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      item.miles + ' Miles'
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'info' },
-                    _react2.default.createElement(
-                      'label',
-                      null,
-                      'Color'
-                    ),
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      item.color
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'info' },
-                    _react2.default.createElement(
-                      'label',
-                      null,
-                      'Horsepower'
-                    ),
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      item.hp
-                    )
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'description' },
-                  _react2.default.createElement(
-                    'p',
-                    null,
-                    item.desc
-                  )
-                )
-              )
-            )
+            this.displayItemInfo(item)
           )
         )
       );

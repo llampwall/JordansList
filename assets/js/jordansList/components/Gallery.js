@@ -61,7 +61,7 @@ export default class Gallery extends Component {
 
   render () {
     const {match, location, history} = this.props;
-    console.log(this.props)
+    console.log("image: " + this.props)
 
     return (
       <div className='gallery'>

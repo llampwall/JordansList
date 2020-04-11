@@ -1,1 +1,16 @@
 node_modules/
+ ../js/jordansList/App.js
+ ../js/jordansList/jordansList.js
+ ../js/jordansList/includes/bgFader.js
+ ../js/jordansList/includes/Header.js
+ ../js/jordansList/pages/Category.js
+ ../js/jordansList/pages/Home.js
+ ../js/jordansList/pages/Item.js
+ ../sass/_bg.scss
+ ../sass/_home.scss
+ ../sass/_item.scss
+ ../sass/_listings.scss
+ ../sass/_reset.scss
+ ../sass/_variables.scss
+ ../sass/main.scss
+ ../views/hello.pug
