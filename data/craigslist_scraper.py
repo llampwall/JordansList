@@ -47,7 +47,8 @@ for key, value in forsale_slugs.items():
             'title': posts[i].find('a', class_='result-title hdrlnk').text,
             'price': float(posts[i].a.text.strip().replace('$', '')),
             'images': images[i],
-            'uploaded': dates[i]
+            'uploaded': dates[i],
+            'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         }
         forsale_results.append(cur)
     index+=25
@@ -96,7 +97,8 @@ for key, value in housing_slugs.items():
             'title': posts[i].find('a', class_='result-title hdrlnk').text,
             'price': float(posts[i].a.text.strip().replace('$', '')),
             'images': images[i],
-            'uploaded': dates[i]
+            'uploaded': dates[i],
+            'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         }
         housing_results.append(cur)
     index+=25
@@ -141,7 +143,8 @@ for key, value in community_slugs.items():
             'title': posts[i].find('a', class_='result-title hdrlnk').text,
             'price': '',
             'images': '',
-            'uploaded': dates[i]
+            'uploaded': dates[i],
+            'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         }
         community_results.append(cur)
     index+=25
@@ -184,7 +187,8 @@ for key, value in jobs_slugs.items():
             'title': posts[i].find('a', class_='result-title hdrlnk').text,
             'price': '',
             'images': '',
-            'uploaded': dates[i]
+            'uploaded': dates[i],
+            'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         }
         jobs_results.append(cur)
     index+=25
@@ -228,7 +232,8 @@ for key, value in services_slugs.items():
             'title': posts[i].find('a', class_='result-title hdrlnk').text,
             'price': '',
             'images': '',
-            'uploaded': dates[i]
+            'uploaded': dates[i],
+            'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         }
         services_results.append(cur)
     index+=25
@@ -271,7 +276,8 @@ for key, value in gigs_slugs.items():
             'title': posts[i].find('a', class_='result-title hdrlnk').text,
             'price': '',
             'images': '',
-            'uploaded': dates[i]
+            'uploaded': dates[i],
+            'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         }
         gigs_results.append(cur)
     index+=25
@@ -283,7 +289,7 @@ for key, value in gigs_slugs.items():
 
 results = forsale_results + housing_results + community_results + jobs_results + services_results + gigs_results
 
-with open('everything.js', 'w') as f:
+with open('new.js', 'w') as f:
     f.write('module.exports = ')
     json.dump(results, f)
     f.close()

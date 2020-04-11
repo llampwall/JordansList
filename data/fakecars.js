@@ -1,4 +1,4 @@
-{
+  {
     id: 1176,
     city: "nyc",
     category: "for-sale",

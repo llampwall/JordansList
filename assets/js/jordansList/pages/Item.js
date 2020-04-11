@@ -46,15 +46,82 @@ export default class Item extends Component {
       .then(function() {});
   }
 
-  render () {
-    const item = this.state.itemData
-    const image = item.images  // fix this later
+  displayItemInfo = (item) => {
+    const { match, history } = this.props;
 
     var formatter = new Intl.NumberFormat("en-US", {
       style: "currency",
       minimumFractionDigits: 0,
       currency: "USD"
     });
+
+    if (match.params.category == 'for-sale' || match.params.category == 'housing' ){
+      return (
+        <section id='item-content'>
+          <div className='media-col'>
+            <Gallery image={item.images}/>
+          </div>
+          <div className='details-col'>
+            <i className='fa fa-star'></i>
+            <div className='date'>Listed on {item.uploaded}</div>
+            <h3 className='title'>{item.title}</h3>
+            <h4 className='price'>{formatter.format(item.price)}</h4>
+
+            <div className='specs'>
+              <div className='info'>
+                <label>VIN</label>
+                <h5>{item.vin}</h5>
+              </div>
+              <div className='info'>
+                <label>Mileage</label>
+                <h5>{item.mpg}</h5>
+              </div>
+              <div className='info'>
+                <label>Transmission</label>
+                <h5>{item.trans}</h5>
+              </div>
+              <div className='info'>
+                <label>Odometer</label>
+                <h5>{`${item.miles} Miles`}</h5>
+              </div>
+              <div className='info'>
+                <label>Color</label>
+                <h5>{item.color}</h5>
+              </div>
+              <div className='info'>
+                <label>Horsepower</label>
+                <h5>{item.hp}</h5>
+              </div>
+            </div>
+
+            <div className="description">
+              <p>{item.desc}</p>
+            </div>
+          </div>
+        </section>
+      )
+    } else {
+
+      return (
+        <section id='item-content'>
+          <div className='details-col'>
+            <i className='fa fa-star'></i>
+            <div className='date'>Listed on {item.uploaded}</div>
+            <h3 className='title'>{item.title}</h3>
+            <h4 className='price'>{formatter.format(item.price)}</h4>
+
+            <div className="description">
+              <p>{item.desc}</p>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+  }
+
+  render () {
+    const item = this.state.itemData
 
     return (
       <div className='item-page'>
@@ -73,51 +140,8 @@ export default class Item extends Component {
               </nav>
             </section>
 
-            <section id='item-content'>
+              {this.displayItemInfo(item)}
 
-              <div className='media-col'>
-                <Gallery image={image}/>
-              </div>
-
-              <div className='details-col'>
-                <i className='fa fa-star'></i>
-                <div className='date'>Listed on {item.uploaded}</div>
-                <h3 className='title'>{item.title}</h3>
-                <h4 className='price'>{formatter.format(item.price)}</h4>
-
-                <div className='specs'>
-                  <div className='info'>
-                    <label>VIN</label>
-                    <h5>{item.vin}</h5>
-                  </div>
-                  <div className='info'>
-                    <label>Mileage</label>
-                    <h5>{item.mpg}</h5>
-                  </div>
-                  <div className='info'>
-                    <label>Transmission</label>
-                    <h5>{item.trans}</h5>
-                  </div>
-                  <div className='info'>
-                    <label>Odometer</label>
-                    <h5>{`${item.miles} Miles`}</h5>
-                  </div>
-                  <div className='info'>
-                    <label>Color</label>
-                    <h5>{item.color}</h5>
-                  </div>
-                  <div className='info'>
-                    <label>Horsepower</label>
-                    <h5>{item.hp}</h5>
-                  </div>
-                </div>
-
-                <div className="description">
-                  <p>{item.desc}</p>
-                </div>
-              </div>
-
-            </section>
           </div>
         </div>
       </div>
